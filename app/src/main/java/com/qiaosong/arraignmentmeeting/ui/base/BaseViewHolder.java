@@ -1,4 +1,4 @@
-package com.qiaosong.baselibrary.ui.base;
+package com.qiaosong.arraignmentmeeting.ui.base;
 
 import android.content.Context;
 import android.view.LayoutInflater;

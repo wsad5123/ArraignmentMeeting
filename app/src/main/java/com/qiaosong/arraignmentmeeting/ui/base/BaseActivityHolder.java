@@ -1,94 +1,105 @@
-package com.qiaosong.baselibrary.ui.base;
+package com.qiaosong.arraignmentmeeting.ui.base;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 
-import com.qiaosong.baselibrary.R;
+import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.baselibrary.callback.OnActionBarMenuClickListener;
-import com.qiaosong.baselibrary.ui.viewholder.ActionBarMenuHolder;
+import com.qiaosong.arraignmentmeeting.ui.viewholder.ActionBarMenuHolder;
+import com.qiaosong.baselibrary.utils.ActionBarUtils;
 import com.qiaosong.baselibrary.utils.PxUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-public class BaseFragmentHolder extends BaseViewHolder {
-    LinearLayout llBaseContent;
-    View vPadding;
-    TextView tvBaseTitle;
-    LinearLayout llBaseTitle;
-    View vImmersionPadding;
-    TextView tvImmersionTitle;
-    LinearLayout llImmersionTitle;
-    LinearLayout llMenu;
-    LinearLayout llBaseMenu;
-    View vLoadPadding;
-    LinearLayout llBaseLoading;
-    View vErrorPadding;
-    Button btnBaseRetry;
-    LinearLayout llBaseError;
+public class BaseActivityHolder extends BaseViewHolder {
+    @BindView(R.id.v_padding)
+    public View vPadding;
+    @BindView(R.id.ll_back)
+    public LinearLayout llBack;
+    @BindView(R.id.tv_title)
+    public TextView tvTitle;
+    @BindView(R.id.ll_base_title)
+    public LinearLayout llBaseTitle;
+    @BindView(R.id.ll_base_content)
+    public LinearLayout llBaseContent;
+    @BindView(R.id.ll_base_menu)
+    public LinearLayout llBaseMenu;
+    @BindView(R.id.v_immersion_padding)
+    public View vImmersionPadding;
+    @BindView(R.id.tv_immersion_title)
+    public TextView tvImmersionTitle;
+    @BindView(R.id.ll_menu)
+    public LinearLayout llMenu;
+    @BindView(R.id.ll_immersion_title)
+    public LinearLayout llImmersionTitle;
+    @BindView(R.id.iv_back)
+    public ImageView ivBack;
+    @BindView(R.id.iv_immersion_back)
+    public ImageView ivImmersionBack;
+    @BindView(R.id.ll_immersion_back)
+    public LinearLayout llImmersionBack;
+    @BindView(R.id.v_load_padding)
+    public View vLoadPadding;
+    @BindView(R.id.ll_base_loading)
+    public LinearLayout llBaseLoading;
+    @BindView(R.id.v_error_padding)
+    public View vErrorPadding;
+    @BindView(R.id.btn_base_retry)
+    public Button btnBaseRetry;
+    @BindView(R.id.ll_base_error)
+    public LinearLayout llBaseError;
+
     private boolean isImmersion;//是否未沉浸式标题
     private View.OnClickListener onClickListener;//刷新按钮点击效果
+    private View.OnClickListener onBackClickListener;//返回按钮点击效果
 
-    public BaseFragmentHolder(Context mContext, boolean isImmersion) {
+    public BaseActivityHolder(BaseActivity mContext, boolean isImmersion) {
         super(mContext);
         this.isImmersion = isImmersion;
-
-        llBaseContent = holderView.findViewById(R.id.ll_base_content);
-        vPadding = holderView.findViewById(R.id.v_padding);
-        tvBaseTitle = holderView.findViewById(R.id.tv_base_title);
-        llBaseTitle = holderView.findViewById(R.id.ll_base_title);
-
-        vImmersionPadding = holderView.findViewById(R.id.v_immersion_padding);
-        tvImmersionTitle = holderView.findViewById(R.id.tv_immersion_title);
-        llImmersionTitle = holderView.findViewById(R.id.ll_immersion_title);
-        llMenu = holderView.findViewById(R.id.ll_menu);
-        llBaseMenu = holderView.findViewById(R.id.ll_base_menu);
-
-        vLoadPadding = holderView.findViewById(R.id.v_load_padding);
-        llBaseLoading = holderView.findViewById(R.id.ll_base_loading);
-
-        vErrorPadding = holderView.findViewById(R.id.v_error_padding);
-        btnBaseRetry = holderView.findViewById(R.id.btn_base_retry);
-        llBaseError = holderView.findViewById(R.id.ll_base_error);
-
-        btnBaseRetry.setOnClickListener(onViewClickListener);
     }
-
 
     @Override
     public int bindViewLayoutId() {
-        return R.layout.base_fragment_layout;
+        return R.layout.base_activity_layout;
     }
 
-
-    View.OnClickListener onViewClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int id = view.getId();
-            if (id == R.id.btn_base_retry) {
+    @OnClick({R.id.ll_back, R.id.ll_immersion_back, R.id.btn_base_retry})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_back:
+            case R.id.ll_immersion_back:
+                if (onBackClickListener != null) {
+                    onBackClickListener.onClick(view);
+                } else {
+                    ((BaseActivity) mContext).finish();
+                }
+                break;
+            case R.id.btn_base_retry:
                 if (onClickListener != null)
                     onClickListener.onClick(view);
-            }
+                break;
         }
-    };
+    }
 
     /**
      * 设置标题和状态栏
      *
-     * @param isShowStatus
-     * @param isShowActionBar
+     * @param isShowPrimordialStatus 是否显示原生状态栏
+     * @param isShowStatus           是否显示状态栏
+     * @param isShowActionBar        是否显示actionbar
      */
-    public void initActionBar(boolean isShowStatus, boolean isShowActionBar) {
+    public void initActionBar(boolean isShowPrimordialStatus, boolean isShowStatus, boolean isShowActionBar) {
+        ActionBarUtils.initStatus((BaseActivity) mContext, isShowPrimordialStatus, false, true);
         if (isImmersion) {
             //设置沉浸式头部高度
             RelativeLayout.LayoutParams p = (RelativeLayout.LayoutParams) llImmersionTitle.getLayoutParams();
@@ -105,6 +116,7 @@ public class BaseFragmentHolder extends BaseViewHolder {
             LinearLayout.LayoutParams loadPaddingLayoutParams = (LinearLayout.LayoutParams) vLoadPadding.getLayoutParams();
             loadPaddingLayoutParams.height = PxUtils.getStatusTitleHeight(mContext) + mContext.getResources().getDimensionPixelSize(R.dimen.title_height);
             vLoadPadding.setLayoutParams(errorPaddingLayoutParams);
+            setBackColor(R.color.white);
         } else {
             //设置头部高度
             RelativeLayout.LayoutParams p = (RelativeLayout.LayoutParams) llBaseTitle.getLayoutParams();
@@ -124,18 +136,19 @@ public class BaseFragmentHolder extends BaseViewHolder {
         }
     }
 
+
     /**
-     * 设置Fragment内容
+     * 设置Activity内容
      *
      * @param layoutId
      */
-    public Unbinder initFragmentContent(Fragment fragment, int layoutId) {
+    public void initActivityContent(int layoutId) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         View view = inflater.inflate(layoutId, null);
         llBaseContent.removeAllViews();
         llBaseContent.addView(view, param);
-        return ButterKnife.bind(fragment, llBaseContent);
+        ButterKnife.bind(mContext, llBaseContent);
     }
 
     /**
@@ -144,13 +157,11 @@ public class BaseFragmentHolder extends BaseViewHolder {
      * @param title
      */
     public void setTitle(String title) {
-        if (title != null) {
+        if (title != null)
             if (isImmersion)
                 tvImmersionTitle.setText(title);
             else
-                tvBaseTitle.setText(title);
-        }
-
+                tvTitle.setText(title);
     }
 
     /**
@@ -163,8 +174,22 @@ public class BaseFragmentHolder extends BaseViewHolder {
             if (isImmersion)
                 tvImmersionTitle.setTextColor(mContext.getResources().getColorStateList(resId));
             else
-                tvBaseTitle.setTextColor(mContext.getResources().getColorStateList(resId));
+                tvTitle.setTextColor(mContext.getResources().getColorStateList(resId));
     }
+
+    /**
+     * 设置back箭头颜色
+     *
+     * @param resId
+     */
+    public void setBackColor(int resId) {
+        if (isImmersion) {
+            ivImmersionBack.setColorFilter(ContextCompat.getColor(mContext, resId));
+        } else {
+            ivBack.setColorFilter(ContextCompat.getColor(mContext, resId));
+        }
+    }
+
 
     /**
      * 设置按钮
@@ -187,7 +212,29 @@ public class BaseFragmentHolder extends BaseViewHolder {
                 menuHolder.setOnClickListener(clickListener);
                 linearLayout.addView(menuHolder.getView());
             }
+    }
 
+    /**
+     * 设置按钮
+     *
+     * @param resIds        图标资源
+     * @param clickListener 按钮监听
+     */
+    public void setActionBarMenuText(int[] resIds, OnActionBarMenuClickListener clickListener) {
+        LinearLayout linearLayout;
+        if (isImmersion) {
+            linearLayout = llMenu;
+        } else {
+            linearLayout = llBaseMenu;
+        }
+        linearLayout.removeAllViews();
+        if (resIds != null)
+            for (int res : resIds) {
+                ActionBarMenuHolder menuHolder = new ActionBarMenuHolder(mContext);
+                menuHolder.initMenuText(res);
+                menuHolder.setOnClickListener(clickListener);
+                linearLayout.addView(menuHolder.getView());
+            }
     }
 
     /**
@@ -206,6 +253,15 @@ public class BaseFragmentHolder extends BaseViewHolder {
      */
     public void setOnRefreshClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+    }
+
+    /**
+     * 设置点击返回效果
+     *
+     * @param onBackClickListener
+     */
+    public void setOnBackClickListener(View.OnClickListener onBackClickListener) {
+        this.onBackClickListener = onBackClickListener;
     }
 
     /**
@@ -230,9 +286,8 @@ public class BaseFragmentHolder extends BaseViewHolder {
 
     }
 
-
     /**
-     * 是否显示错误信息
+     * 是否显示错误
      *
      * @param isVisible
      */
@@ -251,5 +306,6 @@ public class BaseFragmentHolder extends BaseViewHolder {
             }
         }
     }
+
 
 }

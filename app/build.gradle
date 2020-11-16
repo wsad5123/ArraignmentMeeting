@@ -1,5 +1,17 @@
 apply plugin: 'com.android.application'
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
 
+Properties serverProps = new Properties()
+def propFile = file('server_url.properties')
+def testApiUrl, proApiUrl
+if (propFile.canRead()) {
+    serverProps.load(new FileInputStream(propFile))
+    if (serverProps != null) {
+        testApiUrl = serverProps['testApiUrl']
+        proApiUrl = serverProps['proApiUrl']
+    }
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -8,22 +20,72 @@ android {
         applicationId "com.qiaosong.arraignmentmeeting"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
+        signingConfig signingConfigs.debug
+    }
+
+    productFlavors {
+        amfamily {
+            applicationId "com.qiaosong.arraignmentmeeting.family"
+            buildConfigField('String', 'baseApiUrl', proApiUrl)
+        }
+        amprisoner {
+            applicationId "com.qiaosong.arraignmentmeeting.prisoner"
+            buildConfigField('String', 'baseApiUrl', proApiUrl)
+        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+        release {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+    }
+
+    //自动生成指定名称的release发布版的 apk文件
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "AM_${variant.productFlavors[0].name}_${buildType.getName()}_${defaultConfig.versionName}.apk"
+        }
     }
 
     buildTypes {
         release {
+            //混淆
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.  jar'], dir: 'libs')
     implementation project(':baselibrary')
-
+    implementation 'com.jakewharton:butterknife:8.0.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
 }

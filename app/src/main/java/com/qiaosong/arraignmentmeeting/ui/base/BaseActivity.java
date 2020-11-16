@@ -1,79 +1,47 @@
-package com.qiaosong.baselibrary.ui.base;
+package com.qiaosong.arraignmentmeeting.ui.base;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.qiaosong.baselibrary.callback.OnActionBarMenuClickListener;
 import com.qiaosong.baselibrary.event.BaseEvent;
-
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.qiaosong.baselibrary.event.EventConstant;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import butterknife.Unbinder;
+import javax.annotation.Nullable;
 
-public abstract class BaseFragment<P extends IPresenter> extends RxFragment implements IView {
+public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActivity implements IView {
     public P mvpPresenter;
     protected Context mContext;
-    private BaseFragmentHolder mBaseHolder;
-    private Unbinder unbinder;
+    public BaseActivityHolder mBaseHolder;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mContext = getActivity();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        if (mBaseHolder == null) {
-            mBaseHolder = new BaseFragmentHolder(mContext, isImmersion());
-            mBaseHolder.initActionBar(isShowStatusTitle(), isShowActionBar());
-            unbinder = mBaseHolder.initFragmentContent(this, getLayoutId());
-        }
+        mContext = this;
         mvpPresenter = bindPresenter();
-        return mBaseHolder.getView();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-        //在生命周期结束时，将presenter与view之间的联系断开，防止出现内存泄露
-        if (mvpPresenter != null) {
-            mvpPresenter.detachView();
-        }
-        unbinder.unbind();
-    }
-
-    @Override
-    public Activity getSelfActivity() {
-        return getActivity();
+        mBaseHolder = new BaseActivityHolder(this, isImmersion());
+        mBaseHolder.initActivityContent(getLayoutId());
+        setContentView(mBaseHolder.getView());
+        //actionbar 后执行
+        mBaseHolder.initActionBar(isShowPrimordialStatus(), isShowStatusTitle(), isShowActionBar());
     }
 
     /**
-     * 获取子类fragment布局layoutId
+     * 获取子类activity布局layoutId
      *
      * @return layoutId
      */
-    protected abstract int getLayoutId();
+    public abstract int getLayoutId();
 
     /**
      * 绑定Presenter
@@ -82,13 +50,28 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      */
     public abstract P bindPresenter();
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        //在生命周期结束时，将presenter与view之间的联系断开，防止出现内存泄露
+        if (mvpPresenter != null) {
+            mvpPresenter.detachView();
+        }
+    }
+
+    @Override
+    public Activity getSelfActivity() {
+        return this;
+    }
+
     /**
      * 是否显示标题栏
      *
      * @return
      */
     public boolean isShowActionBar() {
-        return false;
+        return true;
     }
 
     /**
@@ -97,6 +80,15 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      * @return
      */
     public boolean isShowStatusTitle() {
+        return true;
+    }
+
+    /**
+     * 是否显示原生状态栏
+     *
+     * @return
+     */
+    public boolean isShowPrimordialStatus() {
         return false;
     }
 
@@ -163,6 +155,15 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
     }
 
     /**
+     * 设置刷新点击效果
+     *
+     * @param onRefreshClickListener
+     */
+    public void setOnRefreshClickListener(View.OnClickListener onRefreshClickListener) {
+        mBaseHolder.setOnRefreshClickListener(onRefreshClickListener);
+    }
+
+    /**
      * 是否显示错误信息
      *
      * @param isVisible
@@ -180,16 +181,15 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
         mBaseHolder.setLoadingVisible(isVisible);
     }
 
-
     /**
-     * 设置刷新点击效果
+     * 设置back箭头颜色
      *
-     * @param onRefreshClickListener
+     * @param resId
      */
-    public void setOnRefreshClickListener(View.OnClickListener onRefreshClickListener) {
-        mBaseHolder.setOnRefreshClickListener(onRefreshClickListener);
+    public void setBackColor(int resId) {
+        if (resId != 0)
+            mBaseHolder.setBackColor(resId);
     }
-
 
     /**
      * event通知
@@ -198,6 +198,21 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment impl
      */
     @Subscribe
     public void onEvent(BaseEvent event) {
+        if (EventConstant.EVENT_LOGOUT.equals(event.getData())) {
+            if (isTopActivity())
+                return;
+            finish();
+        }
+    }
 
+    /**
+     * 判断是否为最上层activity
+     *
+     * @return
+     */
+    private boolean isTopActivity() {
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+        return cn.getClassName().contains(this.getLocalClassName());
     }
 }

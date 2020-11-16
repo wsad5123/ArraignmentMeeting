@@ -1,4 +1,4 @@
-package com.qiaosong.baselibrary.ui.base;
+package com.qiaosong.arraignmentmeeting.ui.base;
 
 public interface IPresenter {
     void detachView();
