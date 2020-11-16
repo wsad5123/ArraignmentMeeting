@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseViewHolder;
-import com.qiaosong.baselibrary.R;
 import com.qiaosong.baselibrary.callback.OnActionBarMenuClickListener;
 
 
