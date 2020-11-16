@@ -34,6 +34,9 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     @BindView(R.id.v_setting)
     View vSetting;
 
+    KeyBoardAdapter mKeyBoardAdapter;
+    CardIdInputAdapter mCardIdInputAdapter;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main_prisoner;
@@ -58,13 +61,30 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mKeyBoardAdapter = new KeyBoardAdapter(mContext, null);
+        mKeyBoardAdapter.setOnKeyBoardClickListener(onKeyBoardClickListener);
+
+        mCardIdInputAdapter = new CardIdInputAdapter(mContext, null);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvCardId.setLayoutManager(linearLayoutManager);
-        rvCardId.setAdapter(new CardIdInputAdapter(mContext, null));
+        rvCardId.setAdapter(mCardIdInputAdapter);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
         rvKeyBoard.setLayoutManager(gridLayoutManager);
-        rvKeyBoard.setAdapter(new KeyBoardAdapter(mContext, null));
+        rvKeyBoard.setAdapter(mKeyBoardAdapter);
     }
+
+    KeyBoardAdapter.OnKeyBoardClickListener onKeyBoardClickListener = new KeyBoardAdapter.OnKeyBoardClickListener() {
+        @Override
+        public void onClick(String data) {
+            mCardIdInputAdapter.input(data);
+        }
+
+        @Override
+        public void onDelete() {
+            mCardIdInputAdapter.delete();
+        }
+    };
 }

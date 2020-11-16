@@ -1,6 +1,7 @@
 package com.qiaosong.arraignmentmeeting.ui.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -12,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
 
+    OnKeyBoardClickListener onKeyBoardClickListener;
 
     public KeyBoardAdapter(Context mContext, List<String> mData) {
         super(mContext, mData);
@@ -44,6 +47,8 @@ public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
         @BindView(R.id.tv_num)
         TextView tvNum;
 
+        String obj;
+
         public KeyBoardHolder(Context mContext, ViewGroup parent) {
             super(mContext, parent);
         }
@@ -57,6 +62,7 @@ public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
         @Override
         public void initData(int position, String obj) {
             super.initData(position, obj);
+            this.obj = obj;
             if (position == 9) {
                 tvNum.setTextSize(15);
             } else if (position == 11) {
@@ -66,5 +72,28 @@ public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
             }
             tvNum.setText(obj);
         }
+
+        @OnClick(R.id.tv_num)
+        public void onClick(View view) {
+            if (obj.equals("删除")) {
+                if (onKeyBoardClickListener != null) {
+                    onKeyBoardClickListener.onDelete();
+                }
+            } else {
+                if (onKeyBoardClickListener != null) {
+                    onKeyBoardClickListener.onClick(obj);
+                }
+            }
+        }
+    }
+
+    public void setOnKeyBoardClickListener(OnKeyBoardClickListener onKeyBoardClickListener) {
+        this.onKeyBoardClickListener = onKeyBoardClickListener;
+    }
+
+    public interface OnKeyBoardClickListener {
+        void onClick(String data);
+
+        void onDelete();
     }
 }

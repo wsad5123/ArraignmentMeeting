@@ -19,15 +19,36 @@ public class CardIdInputAdapter extends BaseRecyclerAdapter<String> {
 
     public CardIdInputAdapter(Context mContext, List<String> mData) {
         super(mContext, mData);
-        mCardId[0] = "3";
-        mCardId[1] = "2";
-        mCardId[2] = "0";
-        mCardId[3] = "4";
+    }
+
+    /**
+     * 输入
+     *
+     * @param data
+     */
+    public void input(String data) {
+        for (int i = 0; i < mCardId.length; i++) {
+            if (TextUtils.isEmpty(mCardId[i])) {
+                mCardId[i] = data;
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void delete() {
+        for (int i = mCardId.length - 1; i >= 0; i--) {
+            if (!TextUtils.isEmpty(mCardId[i])) {
+                mCardId[i] = "";
+                break;
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return 18;
+        return mCardId.length;
     }
 
     @Override
