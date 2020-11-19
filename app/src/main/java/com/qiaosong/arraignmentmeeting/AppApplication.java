@@ -3,6 +3,7 @@ package com.qiaosong.arraignmentmeeting;
 import android.app.Application;
 import android.content.Context;
 
+import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.baselibrary.Library;
 
 
