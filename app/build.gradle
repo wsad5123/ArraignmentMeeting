@@ -88,4 +88,7 @@ dependencies {
     implementation project(':baselibrary')
     implementation 'com.jakewharton:butterknife:8.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
+
+    //好视通sdk
+    implementation(name: "fsp_sdk", ext: "aar")
 }
