@@ -5,14 +5,20 @@ import android.content.Context;
 import android.view.SurfaceView;
 
 import com.hst.fsp.FspEngine;
+import com.hst.fsp.FspEngineConfigure;
 import com.hst.fsp.IFspEngineEventHandler;
+import com.hst.fsp.VideoProfile;
+import com.qiaosong.arraignmentmeeting.event.EventConstant;
+import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
+import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class FspEngineManager implements IFspEngineEventHandler {
     private static volatile FspEngineManager instance = null;
     private static final String APP_ID = "925aa51ebf829d49fc98b2fca5d963bc";
     private static final String APP_SECRETKEY = "d52be60bb810d17e";
-    private static final String USER_ID = "333222";
     private static FspEngine fspEngine;
 
     private FspEngineManager() {
@@ -31,12 +37,19 @@ public class FspEngineManager implements IFspEngineEventHandler {
     }
 
     public void init(Context context) {
-        fspEngine = FspEngine.create(context, APP_ID, null, this);
+
+        FspEngineConfigure configure = new FspEngineConfigure();
+        configure.serverAddr = "";
+        configure.hardwareEncNumber = 1;
+        configure.hardwareDecNumber = 0;
+        fspEngine = FspEngine.create(context, APP_ID, configure, this);
+//        VideoProfile profile = new VideoProfile(1920, 1080, 15);
+//        fspEngine.setVideoProfile(profile);
 //        fspEngine.init();
     }
 
-    public void login() {
-        fspEngine.login(getToken(), USER_ID);
+    public int login(String userId) {
+        return fspEngine.login(getToken(userId), userId);
     }
 
     public void joinGroup(String groupId) {
@@ -47,51 +60,74 @@ public class FspEngineManager implements IFspEngineEventHandler {
         fspEngine.startPreviewVideo(surfaceView);
     }
 
-    public String getToken() {
+    public void startPublishVideo() {
+        fspEngine.startPublishVideo();
+    }
+
+    public void setRemoteVideoRender(String userId, String videoId, SurfaceView renderView, int renderMode) {
+        fspEngine.setRemoteVideoRender(userId, videoId, renderView, renderMode);
+    }
+
+    public void startPublishAudio() {
+        fspEngine.startPublishAudio();
+    }
+
+    public void stopPublishAudio() {
+        fspEngine.stopPublishAudio();
+    }
+
+    public void onDestroy() {
+        if (fspEngine != null)
+            fspEngine.destroy();
+        fspEngine = null;
+    }
+
+    public String getToken(String userId) {
         FspToken tokenBuilder = new FspToken();
         tokenBuilder.setAppId(APP_ID);
         tokenBuilder.setSecretKey(APP_SECRETKEY);
-        tokenBuilder.setUserId(USER_ID);
+        tokenBuilder.setUserId(userId);
         return tokenBuilder.build();
     }
 
     @Override
     public void onLoginResult(int i) {
-        LogUtils.d("onLoginResult:" + i);
+        LogUtils.d("zxy", "onLoginResult:" + i);
     }
 
     @Override
     public void onJoinGroupResult(int i) {
-        LogUtils.d("onJoinGroupResult:" + i);
+        LogUtils.d("zxy", "onJoinGroupResult:" + i);
     }
 
     @Override
     public void onLeaveGroupResult(int i) {
-        LogUtils.d("onLeaveGroupResult:" + i);
+        LogUtils.d("zxy", "onLeaveGroupResult:" + i);
     }
 
     @Override
     public void onFspEvent(int i) {
-        LogUtils.d("onFspEvent:" + i);
+        LogUtils.d("zxy", "onFspEvent:" + i);
     }
 
     @Override
-    public void onRemoteVideoEvent(String s, String s1, int i) {
-        LogUtils.d("onRemoteVideoEvent:" + s + "," + s1 + "," + i);
+    public void onRemoteVideoEvent(String userId, String videoId, int eventType) {
+        LogUtils.d("zxy", "onRemoteVideoEvent:" + userId + "," + videoId + "," + eventType);
+        EventBus.getDefault().post(new TagValueEvent(EventConstant.REMOTE_VIDEO_EVENT, new RemoteVideoEventBean(userId, videoId, eventType)));
     }
 
     @Override
     public void onRemoteAudioEvent(String s, int i) {
-        LogUtils.d("onRemoteAudioEvent:" + s + "," + i);
+        LogUtils.d("zxy", "onRemoteAudioEvent:" + s + "," + i);
     }
 
     @Override
     public void onGroupUsersRefreshed(String[] strings) {
-        LogUtils.d("onGroupUsersRefreshed:" + strings);
+        LogUtils.d("zxy", "onGroupUsersRefreshed:" + strings);
     }
 
     @Override
     public void onRemoteUserEvent(String s, int i) {
-        LogUtils.d("onRemoteUserEvent:" + s + "," + i);
+        LogUtils.d("zxy", "onRemoteUserEvent:" + s + "," + i);
     }
 }

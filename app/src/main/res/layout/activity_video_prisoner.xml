@@ -17,4 +17,5 @@
         android:layout_alignParentBottom="true"
         android:background="@color/bg_color" />
 
+
 </RelativeLayout>

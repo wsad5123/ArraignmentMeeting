@@ -1,6 +1,5 @@
-package com.qiaosong.arraignmentmeeting.ui.activity.family;
+package com.qiaosong.arraignmentmeeting.ui.activity.prisoner;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
@@ -11,17 +10,16 @@ import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
-import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.VideoFamilyContacts;
-import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.VideoFamilyPresenter;
+import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.VideoPrisonerContacts;
+import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.VideoPrisonerPresenter;
 import com.qiaosong.arraignmentmeeting.ui.provider.SurfaceViewOutlineProvider;
-import com.qiaosong.arraignmentmeeting.ui.widget.RoundSurfaceView;
 import com.qiaosong.baselibrary.utils.PxUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
-public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> implements VideoFamilyContacts.IVideoFamilyView {
+public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> implements VideoPrisonerContacts.IVideoPrisonerView {
     @BindView(R.id.sv)
     SurfaceView sv;
     @BindView(R.id.sv_self)
@@ -29,12 +27,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_video_family;
-    }
-
-    @Override
-    public VideoFamilyPresenter bindPresenter() {
-        return new VideoFamilyPresenter(this);
+        return R.layout.activity_video_prisoner;
     }
 
     @Override
@@ -48,6 +41,11 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
     }
 
     @Override
+    public VideoPrisonerPresenter bindPresenter() {
+        return new VideoPrisonerPresenter(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         svSelf.setZOrderOnTop(true);
@@ -57,7 +55,6 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
         FspEngineManager.getInstance().startPublishVideo();
         FspEngineManager.getInstance().startPublishAudio();
-
     }
 
     @Override
@@ -65,6 +62,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         super.onDestroy();
         FspEngineManager.getInstance().onDestroy();
     }
+
 
     @Subscribe
     public void onEvent(TagValueEvent event) {

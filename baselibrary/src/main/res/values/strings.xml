@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ArraignmentMeeting</string>
+
+    <string name="permissions_read_external_storage">请打开读写外部存储权限</string>
+
+    <string name="permissions_camera">请打开相机权限</string>
+
+    <string name="permissions_install_app">请打开安装权限</string>
+
 </resources>
