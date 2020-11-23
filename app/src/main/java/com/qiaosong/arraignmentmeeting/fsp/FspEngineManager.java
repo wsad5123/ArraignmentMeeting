@@ -42,7 +42,7 @@ public class FspEngineManager implements IFspEngineEventHandler {
         configure.serverAddr = "";
         configure.hardwareEncNumber = 1;
         configure.hardwareDecNumber = 0;
-        fspEngine = FspEngine.create(context, APP_ID, configure, this);
+        fspEngine = FspEngine.create(context, APP_ID, null, this);
 //        VideoProfile profile = new VideoProfile(1920, 1080, 15);
 //        fspEngine.setVideoProfile(profile);
 //        fspEngine.init();

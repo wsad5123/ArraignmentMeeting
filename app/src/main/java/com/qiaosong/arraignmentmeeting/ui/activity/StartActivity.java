@@ -36,26 +36,11 @@ public class StartActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (BuildConfig.APPLICATION_ID.equals("com.qiaosong.arraignmentmeeting.family")) {
-            PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
-                @Override
-                public void accept(Boolean aBoolean) {
-                    FspEngineManager.getInstance().init(AppApplication.getInstance());
-                    if (FspEngineManager.getInstance().login("55556") == FspEngine.ERR_OK) {
-                        startActivity(new Intent(mContext, VideoFamilyActivity.class));
-                    }
-                }
-            }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+
+            startActivity(new Intent(mContext, MainFamilyActivity.class));
 
         } else {
-            PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
-                @Override
-                public void accept(Boolean aBoolean) {
-                    FspEngineManager.getInstance().init(AppApplication.getInstance());
-                    if (FspEngineManager.getInstance().login("66667") == FspEngine.ERR_OK) {
-                        startActivity(new Intent(mContext, VideoPrisonerActivity.class));
-                    }
-                }
-            }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+            startActivity(new Intent(mContext, MainPrisonerActivity.class));
 
         }
     }
