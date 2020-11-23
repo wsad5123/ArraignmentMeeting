@@ -10,6 +10,8 @@ import com.hst.fsp.IFspEngineEventHandler;
 import com.hst.fsp.VideoProfile;
 import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
+import com.qiaosong.arraignmentmeeting.event.bean.JoinGroupEventBean;
+import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.utils.LogUtils;
 
@@ -91,13 +93,17 @@ public class FspEngineManager implements IFspEngineEventHandler {
     }
 
     @Override
-    public void onLoginResult(int i) {
-        LogUtils.d("zxy", "onLoginResult:" + i);
+    public void onLoginResult(int result) {
+        LogUtils.d("zxy", "onLoginResult:" + result);
+        EventBus.getDefault().post(new TagValueEvent(EventConstant.LOGIN_RESULT_EVENT, new LoginResultEventBean(result)));
+
     }
 
     @Override
-    public void onJoinGroupResult(int i) {
-        LogUtils.d("zxy", "onJoinGroupResult:" + i);
+    public void onJoinGroupResult(int result) {
+        LogUtils.d("zxy", "onJoinGroupResult:" + result);
+        EventBus.getDefault().post(new TagValueEvent(EventConstant.JOIN_GROUP_EVENT, new JoinGroupEventBean(result)));
+
     }
 
     @Override

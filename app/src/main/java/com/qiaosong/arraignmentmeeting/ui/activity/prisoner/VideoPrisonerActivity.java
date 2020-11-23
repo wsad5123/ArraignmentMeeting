@@ -7,6 +7,7 @@ import com.hst.fsp.FspEngine;
 import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
+import com.qiaosong.arraignmentmeeting.event.bean.JoinGroupEventBean;
 import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
@@ -51,12 +52,8 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
         svSelf.setZOrderOnTop(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
-        int result = FspEngineManager.getInstance().joinGroup("5556");
-        if (result == FspEngine.ERR_OK) {
-            FspEngineManager.getInstance().startPreviewVideo(svSelf);
-            FspEngineManager.getInstance().startPublishVideo();
-            FspEngineManager.getInstance().startPublishAudio();
-        }
+        FspEngineManager.getInstance().joinGroup("5556");
+        FspEngineManager.getInstance().startPreviewVideo(svSelf);
     }
 
     @Override
@@ -75,6 +72,14 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
                     FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), sv, FspEngine.RENDER_MODE_SCALE_FILL);
                 } else if (bean.getEventType() == FspEngine.REMOTE_VIDEO_PUBLISH_STOPED) {
                     FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), null, FspEngine.RENDER_MODE_SCALE_FILL);
+                }
+            }
+        } else if (EventConstant.JOIN_GROUP_EVENT.equals(event.getTag())) {
+            if (event.getValue() instanceof JoinGroupEventBean) {
+                JoinGroupEventBean bean = (JoinGroupEventBean) event.getValue();
+                if (bean.isOk()) {
+                    FspEngineManager.getInstance().startPublishVideo();
+                    FspEngineManager.getInstance().startPublishAudio();
                 }
             }
         }

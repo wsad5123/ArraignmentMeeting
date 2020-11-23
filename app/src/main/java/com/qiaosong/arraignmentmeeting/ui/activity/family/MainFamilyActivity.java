@@ -11,11 +11,19 @@ import android.widget.TextView;
 import com.hst.fsp.FspEngine;
 import com.qiaosong.arraignmentmeeting.AppApplication;
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.event.EventConstant;
+import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
+import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
+import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainFamilyPresenter;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -86,12 +94,23 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) {
-                int initResult = FspEngineManager.getInstance().init(AppApplication.getInstance());
-                int loginResult = FspEngineManager.getInstance().login("777888");
-                if (initResult == FspEngine.ERR_OK && loginResult == FspEngine.ERR_OK) {
-                    startActivity(new Intent(mContext, VideoFamilyActivity.class));
+                if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
+                    FspEngineManager.getInstance().login(new Random().nextInt(10) + "" + new Random().nextInt(10) + "" + new Random().nextInt(10));
                 }
             }
         }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
     }
+
+    @Subscribe
+    public void onEvent(TagValueEvent event) {
+        if (EventConstant.LOGIN_RESULT_EVENT.equals(event.getTag())) {
+            if (event.getValue() instanceof LoginResultEventBean) {
+                LoginResultEventBean bean = (LoginResultEventBean) event.getValue();
+                if (bean.isOk()) {
+                    startActivity(new Intent(mContext, VideoFamilyActivity.class));
+                }
+            }
+        }
+    }
+
 }
