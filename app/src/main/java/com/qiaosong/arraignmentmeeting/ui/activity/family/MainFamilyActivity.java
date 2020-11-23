@@ -86,8 +86,9 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) {
-                FspEngineManager.getInstance().init(AppApplication.getInstance());
-                if (FspEngineManager.getInstance().login("55556") == FspEngine.ERR_OK) {
+                int initResult = FspEngineManager.getInstance().init(AppApplication.getInstance());
+                int loginResult = FspEngineManager.getInstance().login("777888");
+                if (initResult == FspEngine.ERR_OK && loginResult == FspEngine.ERR_OK) {
                     startActivity(new Intent(mContext, VideoFamilyActivity.class));
                 }
             }

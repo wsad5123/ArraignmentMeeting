@@ -53,7 +53,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         svSelf.setZOrderOnTop(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
-        FspEngineManager.getInstance().joinGroup("258963");
+        FspEngineManager.getInstance().joinGroup("5556");
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
         FspEngineManager.getInstance().startPublishVideo();
         FspEngineManager.getInstance().startPublishAudio();

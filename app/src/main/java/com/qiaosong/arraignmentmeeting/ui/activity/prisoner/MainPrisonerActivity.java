@@ -90,8 +90,9 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
         PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) {
-                FspEngineManager.getInstance().init(AppApplication.getInstance());
-                if (FspEngineManager.getInstance().login("66667") == FspEngine.ERR_OK) {
+                int initResult = FspEngineManager.getInstance().init(AppApplication.getInstance());
+                int loginResult = FspEngineManager.getInstance().login("999666");
+                if (initResult == FspEngine.ERR_OK && loginResult == FspEngine.ERR_OK) {
                     startActivity(new Intent(mContext, VideoPrisonerActivity.class));
                 }
             }

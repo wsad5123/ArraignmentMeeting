@@ -17,8 +17,8 @@ import org.greenrobot.eventbus.EventBus;
 
 public class FspEngineManager implements IFspEngineEventHandler {
     private static volatile FspEngineManager instance = null;
-    private static final String APP_ID = "925aa51ebf829d49fc98b2fca5d963bc";
-    private static final String APP_SECRETKEY = "d52be60bb810d17e";
+    private static final String APP_ID = "7fb488ff2eb5887cc615c183a1e61097";
+    private static final String APP_SECRETKEY = "25422ccb1bed9cca";
     private static FspEngine fspEngine;
 
     private FspEngineManager() {
@@ -36,24 +36,24 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return instance;
     }
 
-    public void init(Context context) {
+    public int init(Context context) {
 
         FspEngineConfigure configure = new FspEngineConfigure();
         configure.serverAddr = "";
         configure.hardwareEncNumber = 1;
         configure.hardwareDecNumber = 0;
-        fspEngine = FspEngine.create(context, APP_ID, null, this);
+        fspEngine = FspEngine.create(context, APP_ID, configure, this);
 //        VideoProfile profile = new VideoProfile(1920, 1080, 15);
 //        fspEngine.setVideoProfile(profile);
-//        fspEngine.init();
+        return fspEngine.init();
     }
 
     public int login(String userId) {
         return fspEngine.login(getToken(userId), userId);
     }
 
-    public void joinGroup(String groupId) {
-        fspEngine.joinGroup(groupId);
+    public int joinGroup(String groupId) {
+        return fspEngine.joinGroup(groupId);
     }
 
     public void startPreviewVideo(SurfaceView surfaceView) {

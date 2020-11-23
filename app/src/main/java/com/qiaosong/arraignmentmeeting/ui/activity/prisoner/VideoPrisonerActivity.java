@@ -51,10 +51,12 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
         svSelf.setZOrderOnTop(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
-        FspEngineManager.getInstance().joinGroup("258963");
-        FspEngineManager.getInstance().startPreviewVideo(svSelf);
-        FspEngineManager.getInstance().startPublishVideo();
-        FspEngineManager.getInstance().startPublishAudio();
+        int result = FspEngineManager.getInstance().joinGroup("5556");
+        if (result == FspEngine.ERR_OK) {
+            FspEngineManager.getInstance().startPreviewVideo(svSelf);
+            FspEngineManager.getInstance().startPublishVideo();
+            FspEngineManager.getInstance().startPublishAudio();
+        }
     }
 
     @Override
