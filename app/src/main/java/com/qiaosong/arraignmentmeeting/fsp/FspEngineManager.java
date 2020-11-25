@@ -50,8 +50,8 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return fspEngine.init();
     }
 
-    public int login(String userId) {
-        return fspEngine.login(getToken(userId), userId);
+    public int login(String userId, String token) {
+        return fspEngine.login(token, userId);
     }
 
     public int joinGroup(String groupId) {

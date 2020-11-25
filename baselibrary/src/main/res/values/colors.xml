@@ -4,4 +4,6 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="progress_bg">#B3111111</color>
 </resources>

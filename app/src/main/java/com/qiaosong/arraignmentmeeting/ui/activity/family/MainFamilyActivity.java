@@ -11,30 +11,25 @@ import android.widget.TextView;
 import com.hst.fsp.FspEngine;
 import com.qiaosong.arraignmentmeeting.AppApplication;
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
-import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
+import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainFamilyPresenter;
+import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implements MainFamilyContacts.IMainFamilyView {
-
-    @BindView(R.id.tv_time)
-    TextView tvTime;
-    @BindView(R.id.tv_date)
-    TextView tvDate;
     @BindView(R.id.tv_one)
     TextView tvOne;
     @BindView(R.id.v_one)
@@ -63,10 +58,13 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
     Button btnSure;
     @BindView(R.id.v_setting)
     View vSetting;
+    @BindView(R.id.rl_parent)
+    RelativeLayout rlParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
     }
 
     @Override
@@ -91,14 +89,7 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
 
     @OnClick(R.id.btn_sure)
     public void onClick(View view) {
-        PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) {
-                if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
-                    FspEngineManager.getInstance().login(new Random().nextInt(10) + "" + new Random().nextInt(10) + "" + new Random().nextInt(10));
-                }
-            }
-        }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+        mvpPresenter.getToken("1234");
     }
 
     @Subscribe
@@ -107,10 +98,26 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             if (event.getValue() instanceof LoginResultEventBean) {
                 LoginResultEventBean bean = (LoginResultEventBean) event.getValue();
                 if (bean.isOk()) {
-                    startActivity(new Intent(mContext, VideoFamilyActivity.class));
+                    startActivity(new Intent(mContext, VideoWaitActivity.class));
                 }
             }
         }
     }
 
+    /**
+     * 获得token数据
+     *
+     * @param bean
+     */
+    @Override
+    public void onLoginToken(LoginTokenBean bean) {
+        PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
+                    FspEngineManager.getInstance().login(bean.getUserUuid(), FspEngineManager.getInstance().getToken(bean.getUserUuid()));//bean.getToken());
+                }
+            }
+        }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+    }
 }

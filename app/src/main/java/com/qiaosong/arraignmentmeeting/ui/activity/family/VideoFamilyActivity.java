@@ -15,7 +15,6 @@ import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.VideoFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.VideoFamilyPresenter;
 import com.qiaosong.arraignmentmeeting.ui.provider.SurfaceViewOutlineProvider;
-import com.qiaosong.arraignmentmeeting.ui.widget.RoundSurfaceView;
 import com.qiaosong.baselibrary.utils.PxUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -54,7 +53,6 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         svSelf.setZOrderOnTop(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
-        FspEngineManager.getInstance().joinGroup("5556");
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
     }
 

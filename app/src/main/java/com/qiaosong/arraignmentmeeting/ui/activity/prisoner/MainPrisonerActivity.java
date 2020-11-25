@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,16 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hst.fsp.FspEngine;
 import com.qiaosong.arraignmentmeeting.AppApplication;
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
-import com.qiaosong.arraignmentmeeting.ui.activity.family.VideoFamilyActivity;
 import com.qiaosong.arraignmentmeeting.ui.adapter.CardIdInputAdapter;
 import com.qiaosong.arraignmentmeeting.ui.adapter.KeyBoardAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainPrisonerContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainPrisonerPresenter;
+import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -32,15 +32,13 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.Random;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> implements MainPrisonerContacts.IMainPrisonerView {
-    @BindView(R.id.tv_time)
-    TextView tvTime;
-    @BindView(R.id.tv_date)
-    TextView tvDate;
+
+    KeyBoardAdapter mKeyBoardAdapter;
+    CardIdInputAdapter mCardIdInputAdapter;
     @BindView(R.id.rv_card_id)
     RecyclerView rvCardId;
     @BindView(R.id.rv_key_board)
@@ -49,9 +47,8 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     Button btnSure;
     @BindView(R.id.v_setting)
     View vSetting;
-
-    KeyBoardAdapter mKeyBoardAdapter;
-    CardIdInputAdapter mCardIdInputAdapter;
+    @BindView(R.id.rl_parent)
+    RelativeLayout rlParent;
 
     @Override
     public int getLayoutId() {
@@ -76,6 +73,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
 
         mKeyBoardAdapter = new KeyBoardAdapter(mContext, null);
         mKeyBoardAdapter.setOnKeyBoardClickListener(onKeyBoardClickListener);
@@ -98,7 +96,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
             @Override
             public void accept(Boolean aBoolean) {
                 if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
-                    FspEngineManager.getInstance().login(new Random().nextInt(10) + "" + new Random().nextInt(10) + "" + new Random().nextInt(10));
+//                    FspEngineManager.getInstance().login(new Random().nextInt(10) + "" + new Random().nextInt(10) + "" + new Random().nextInt(10));
                 }
             }
         }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
@@ -127,4 +125,9 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
             mCardIdInputAdapter.delete();
         }
     };
+
+    @Override
+    public void onLoginToken(LoginTokenBean bean) {
+
+    }
 }

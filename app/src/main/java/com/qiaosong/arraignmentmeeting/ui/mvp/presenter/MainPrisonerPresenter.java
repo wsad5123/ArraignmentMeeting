@@ -1,5 +1,7 @@
 package com.qiaosong.arraignmentmeeting.ui.mvp.presenter;
 
+import android.text.TextUtils;
+
 import com.qiaosong.arraignmentmeeting.ui.activity.prisoner.MainPrisonerActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BasePresenter;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainPrisonerContacts;
@@ -11,5 +13,19 @@ public class MainPrisonerPresenter extends BasePresenter<MainPrisonerActivity> i
     public MainPrisonerPresenter(MainPrisonerActivity view) {
         super(view);
         mModel = new MainPrisonerModel(mvpReference.get());
+    }
+
+    @Override
+    public void getToken(String code) {
+        if (isViewAttach() && !TextUtils.isEmpty(code)) {
+
+        }
+    }
+
+    @Override
+    public void getOrderCodeByCrimanalsCardId(String id) {
+        if (isViewAttach() && !TextUtils.isEmpty(id)) {
+
+        }
     }
 }
