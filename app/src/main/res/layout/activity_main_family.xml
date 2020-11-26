@@ -37,7 +37,6 @@
                 android:layout_centerInParent="true"
                 android:inputType="number"
                 android:maxLength="1"
-                android:text="1"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -49,7 +48,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="14dp"
-                android:background="@drawable/drawable_main_code_line" />
+                android:background="@color/white" />
 
         </RelativeLayout>
 
@@ -67,7 +66,6 @@
                 android:layout_centerInParent="true"
                 android:inputType="number"
                 android:maxLength="1"
-                android:text="2"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -77,9 +75,10 @@
                 android:layout_width="60dp"
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="14dp"
-                android:background="@drawable/drawable_main_code_line" />
+                android:background="@color/white" />
 
         </RelativeLayout>
 
@@ -97,7 +96,6 @@
                 android:layout_centerInParent="true"
                 android:inputType="number"
                 android:maxLength="1"
-                android:text="3"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -109,7 +107,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="14dp"
-                android:background="@drawable/drawable_main_code_line" />
+                android:visibility="gone"
+                android:background="@color/white" />
 
         </RelativeLayout>
 
@@ -127,7 +126,6 @@
                 android:layout_centerInParent="true"
                 android:inputType="number"
                 android:maxLength="1"
-                android:text="4"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -139,7 +137,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="14dp"
-                android:background="@drawable/drawable_main_code_line" />
+                android:background="@color/white"
+                android:visibility="gone"/>
 
         </RelativeLayout>
     </LinearLayout>
