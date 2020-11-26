@@ -19,6 +19,7 @@ import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
+import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.adapter.CardIdInputAdapter;
 import com.qiaosong.arraignmentmeeting.ui.adapter.KeyBoardAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
@@ -28,8 +29,6 @@ import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -92,14 +91,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
 
     @OnClick(R.id.btn_sure)
     public void onClick(View view) {
-        PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) {
-                if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
-//                    FspEngineManager.getInstance().login(new Random().nextInt(10) + "" + new Random().nextInt(10) + "" + new Random().nextInt(10));
-                }
-            }
-        }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+        mvpPresenter.getOrderCodeByCrimanalsCardId("312156555569874562");//mCardIdInputAdapter.getId());
     }
 
     @Subscribe
@@ -108,7 +100,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
             if (event.getValue() instanceof LoginResultEventBean) {
                 LoginResultEventBean bean = (LoginResultEventBean) event.getValue();
                 if (bean.isOk()) {
-                    startActivity(new Intent(mContext, VideoPrisonerActivity.class));
+                    startActivity(new Intent(mContext, VideoWaitActivity.class));
                 }
             }
         }
@@ -126,8 +118,19 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
         }
     };
 
+    /**
+     * 获取登录token
+     * @param bean
+     */
     @Override
     public void onLoginToken(LoginTokenBean bean) {
-
+        PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (FspEngineManager.getInstance().init(AppApplication.getInstance()) == FspEngine.ERR_OK) {
+                    FspEngineManager.getInstance().login(bean.getUserUuid(), FspEngineManager.getInstance().getToken(bean.getUserUuid()));//bean.getToken());
+                }
+            }
+        }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
     }
 }

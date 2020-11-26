@@ -54,6 +54,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
+        mvpPresenter.getIsBeginMeeting();
     }
 
     @Override
@@ -73,14 +74,15 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
                     FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), null, FspEngine.RENDER_MODE_SCALE_FILL);
                 }
             }
-        } else if (EventConstant.JOIN_GROUP_EVENT.equals(event.getTag())) {
-            if (event.getValue() instanceof JoinGroupEventBean) {
-                JoinGroupEventBean bean = (JoinGroupEventBean) event.getValue();
-                if (bean.isOk()) {
-                    FspEngineManager.getInstance().startPublishVideo();
-                    FspEngineManager.getInstance().startPublishAudio();
-                }
-            }
         }
+    }
+
+    /**
+     * 开始会见
+     */
+    @Override
+    public void onIsBeginVideo() {
+        FspEngineManager.getInstance().startPublishVideo();
+        FspEngineManager.getInstance().startPublishAudio();
     }
 }

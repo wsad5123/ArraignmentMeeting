@@ -2,6 +2,8 @@ package com.qiaosong.arraignmentmeeting.http.subscribe;
 
 import android.content.Context;
 
+import com.qiaosong.arraignmentmeeting.bean.BeginMeetBean;
+import com.qiaosong.arraignmentmeeting.bean.CardIdRoomIdBean;
 import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.http.Api;
 import com.qiaosong.baselibrary.bean.ApiNormalBean;
@@ -12,6 +14,7 @@ import com.qiaosong.arraignmentmeeting.http.ServiceGenerator;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 public class AppSubscribe extends BaseSubscribe {
     public AppSubscribe(Context context) {
@@ -23,7 +26,7 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestValidateToken(Map<String, Object> params, ApiObserver<LoginTokenBean> mObservable) {
+    public void requestValidateToken(MultipartBody params, ApiObserver<LoginTokenBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
         Observable<ApiResultBean<LoginTokenBean>> observable = apiService.requestValidateToken(params);
         subscribe(observable, mObservable);
@@ -34,11 +37,24 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestOrderCodeByCrimanalsCardId(Map<String, Object> params, ApiObserver<Boolean> mObservable) {
+    public void requestOrderCodeByCrimanalsCardId(MultipartBody params, ApiObserver<CardIdRoomIdBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
-        Observable<ApiResultBean<Boolean>> observable = apiService.requestOrderCodeByCrimanalsCardId(params);
+        Observable<ApiResultBean<CardIdRoomIdBean>> observable = apiService.requestOrderCodeByCrimanalsCardId(params);
         subscribe(observable, mObservable);
     }
+
+
+    /**
+     * 获取是否开始会见
+     *
+     * @param mObservable
+     */
+    public void requestIsbeginMeetting(MultipartBody params, ApiObserver<BeginMeetBean> mObservable) {
+        Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
+        Observable<ApiResultBean<BeginMeetBean>> observable = apiService.requestIsbeginMeetting(params);
+        subscribe(observable, mObservable);
+    }
+
 
 
 }

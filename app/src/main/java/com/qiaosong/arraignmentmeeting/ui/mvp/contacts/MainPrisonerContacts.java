@@ -22,6 +22,6 @@ public class MainPrisonerContacts {
     public interface IMainPrisonerModel {
         void httpGetToken(String code, MvpDataCallBack<LoginTokenBean> callBack);
 
-        void httpGetOrderCodeByCrimanalsCardId(String id);
+        void httpGetOrderCodeByCrimanalsCardId(String id, MvpDataCallBack<String> callBack);
     }
 }

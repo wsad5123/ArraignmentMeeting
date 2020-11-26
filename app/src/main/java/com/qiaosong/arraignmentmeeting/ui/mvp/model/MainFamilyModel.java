@@ -12,6 +12,8 @@ import com.qiaosong.arraignmentmeeting.ui.base.BaseModel;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.baselibrary.bean.ApiNormalBean;
 
+import okhttp3.MultipartBody;
+
 public class MainFamilyModel extends BaseModel implements MainFamilyContacts.IMainFamilyModel {
 
     public MainFamilyModel(Context mContext) {
@@ -26,9 +28,9 @@ public class MainFamilyModel extends BaseModel implements MainFamilyContacts.IMa
      */
     @Override
     public void httpGetToken(String code, MvpDataCallBack<LoginTokenBean> callBack) {
-        RetrofitHttpParams params = new RetrofitHttpParams(mContext);
-        params.put("mettingCode", Integer.parseInt(code));
-        new AppSubscribe(mContext).requestValidateToken(params.getRequestParams(), new ApiObserver<LoginTokenBean>(mContext, true) {
+        MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
+        builder.addFormDataPart("mettingCode", code);
+        new AppSubscribe(mContext).requestValidateToken(builder.build(), new ApiObserver<LoginTokenBean>(mContext, true) {
             @Override
             public void onSuccess(LoginTokenBean data) {
                 if (data != null) {

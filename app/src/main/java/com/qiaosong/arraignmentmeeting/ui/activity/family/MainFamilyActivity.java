@@ -89,7 +89,7 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
 
     @OnClick(R.id.btn_sure)
     public void onClick(View view) {
-        mvpPresenter.getToken("1234");
+        mvpPresenter.getToken("9467");
     }
 
     @Subscribe

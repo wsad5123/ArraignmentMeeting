@@ -46,6 +46,16 @@ public class CardIdInputAdapter extends BaseRecyclerAdapter<String> {
         notifyDataSetChanged();
     }
 
+    public String getId() {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < mCardId.length; i++) {
+            if (!TextUtils.isEmpty(mCardId[i])) {
+                sb.append(mCardId[i]);
+            }
+        }
+        return sb.toString();
+    }
+
     @Override
     public int getItemCount() {
         return mCardId.length;
