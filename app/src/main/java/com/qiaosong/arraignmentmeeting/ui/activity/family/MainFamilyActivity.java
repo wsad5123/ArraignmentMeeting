@@ -16,6 +16,7 @@ import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
+import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
@@ -87,9 +88,16 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         return new MainFamilyPresenter(this);
     }
 
-    @OnClick(R.id.btn_sure)
+    @OnClick({R.id.btn_sure, R.id.v_setting})
     public void onClick(View view) {
-        mvpPresenter.getToken("9467");
+        switch (view.getId()) {
+            case R.id.v_setting:
+                startActivity(new Intent(mContext, SettingActivity.class));
+                break;
+            case R.id.btn_sure:
+                mvpPresenter.getToken("9467");
+                break;
+        }
     }
 
     @Subscribe

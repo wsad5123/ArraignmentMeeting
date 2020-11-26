@@ -19,6 +19,7 @@ import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
+import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.adapter.CardIdInputAdapter;
 import com.qiaosong.arraignmentmeeting.ui.adapter.KeyBoardAdapter;
@@ -89,9 +90,16 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
         rvKeyBoard.setAdapter(mKeyBoardAdapter);
     }
 
-    @OnClick(R.id.btn_sure)
+    @OnClick({R.id.btn_sure, R.id.v_setting})
     public void onClick(View view) {
-        mvpPresenter.getOrderCodeByCrimanalsCardId("312156555569874562");//mCardIdInputAdapter.getId());
+        switch (view.getId()) {
+            case R.id.v_setting:
+                startActivity(new Intent(mContext, SettingActivity.class));
+                break;
+            case R.id.btn_sure:
+                mvpPresenter.getOrderCodeByCrimanalsCardId("312156555569874562");//mCardIdInputAdapter.getId());
+                break;
+        }
     }
 
     @Subscribe
@@ -120,6 +128,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
 
     /**
      * 获取登录token
+     *
      * @param bean
      */
     @Override
