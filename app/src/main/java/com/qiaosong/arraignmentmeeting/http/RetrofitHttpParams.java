@@ -70,6 +70,7 @@ public class RetrofitHttpParams {
     public MultipartBody.Builder getRequestMultipartBody() {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
+        builder.addFormDataPart("os", "Android");
         return builder;
     }
 
