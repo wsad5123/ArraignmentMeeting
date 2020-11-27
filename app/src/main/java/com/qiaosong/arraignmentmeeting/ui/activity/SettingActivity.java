@@ -1,18 +1,21 @@
 package com.qiaosong.arraignmentmeeting.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.R;
-import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.callback.OnCitySelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnProvinceSelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorSelectListener;
@@ -85,7 +88,10 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
-        mvpPresenter.getDeviceInfo();
+        if (AppCacheManager.getInstance().getHttpAddressBean() != null) {
+            etIp.setText(AppCacheManager.getInstance().getHttpAddressBean().getIp());
+            etPort.setText(AppCacheManager.getInstance().getHttpAddressBean().getPort());
+        }
     }
 
     /**
@@ -146,22 +152,27 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     /**
      * 当获得基础信息
      *
-     * @param baseInformationBean
+     * @param deviceInfo
      */
     @Override
-    public void onBaseInformationData(BaseInformationBean baseInformationBean) {
-        etIp.setText(baseInformationBean.getServiceIp());
-        etPort.setText(baseInformationBean.getServicePort());
-        etDeviceName.setText(baseInformationBean.getDeviceName());
-        tvProvince.setText(baseInformationBean.getProvinceBean().getName());
-        tvCity.setText(baseInformationBean.getCityBean().getName());
-        tvType.setText(baseInformationBean.getRegulatorTypeBean().getPtypename());
-        tvName.setText(baseInformationBean.getRegulatorBean().getPrisonname());
+    public void onDeviceInfoData(ApiDeviceInfoBean deviceInfo) {
+        etDeviceName.setText(deviceInfo.getDeviceinfo().getDevicename());
+        tvProvince.setText(deviceInfo.getAddress().getP_name());
+        tvCity.setText(deviceInfo.getAddress().getC_name());
+        tvType.setText(deviceInfo.getTypename().getPtypename());
+        tvName.setText(deviceInfo.getPrisonunitinfo().getPrisonname());
     }
 
-    @OnClick({R.id.tv_province, R.id.tv_city, R.id.tv_type, R.id.tv_name, R.id.btn_save})
+    @OnClick({R.id.tv_province, R.id.tv_city, R.id.tv_type, R.id.tv_name, R.id.tv_service_ip, R.id.tv_location_ip, R.id.btn_save})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_service_ip:
+                mvpPresenter.getDeviceInfo(etIp.getText().toString(), etPort.getText().toString());
+                break;
+            case R.id.tv_location_ip:
+                Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(intent);
+                break;
             case R.id.tv_province:
                 mvpPresenter.getAllProvince();
                 break;

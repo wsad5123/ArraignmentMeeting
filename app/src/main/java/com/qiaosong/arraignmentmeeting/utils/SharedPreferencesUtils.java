@@ -8,15 +8,15 @@ public class SharedPreferencesUtils {
     //SharedPreferences文件名
     private static final String FILE_NAME = "ArraignmentMeeting";
 
-    public static final String BASE_INFORMATION_BEAN_JSON = "base_information_bean_json";//基础信息类
+    public static final String HTTP_ADDRESS_BEAN_JSON = "http_address_bean_json";//网络地址
 
 
-    public static void setBaseInformationBeanJson(Context context, String jsonData) {
-        saveData(context, BASE_INFORMATION_BEAN_JSON, jsonData);
+    public static void setHttpAddressBeanJson(Context context, String jsonData) {
+        saveData(context, HTTP_ADDRESS_BEAN_JSON, jsonData);
     }
 
-    public static String getBaseInformationBeanJson(Context context) {
-        return (String) getData(context, BASE_INFORMATION_BEAN_JSON, "");
+    public static String getHttpAddressBeanJson(Context context) {
+        return (String) getData(context, HTTP_ADDRESS_BEAN_JSON, "");
     }
 
     /**
@@ -25,7 +25,7 @@ public class SharedPreferencesUtils {
      * @param context
      */
     public static void clear(Context context) {
-        remove(context, BASE_INFORMATION_BEAN_JSON);
+        remove(context, HTTP_ADDRESS_BEAN_JSON);
     }
 
     /**

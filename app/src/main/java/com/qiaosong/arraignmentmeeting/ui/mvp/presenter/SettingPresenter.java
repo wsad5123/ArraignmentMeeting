@@ -2,11 +2,13 @@ package com.qiaosong.arraignmentmeeting.ui.mvp.presenter;
 
 import android.text.TextUtils;
 
-import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
+import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.HttpAddressBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BasePresenter;
@@ -91,14 +93,21 @@ public class SettingPresenter extends BasePresenter<SettingActivity> implements 
      * 获取设备信息回显数据
      */
     @Override
-    public void getDeviceInfo() {
+    public void getDeviceInfo(String serviceIp, String servicePort) {
         if (isViewAttach()) {
-            if (mModel.getBaseInformationData() != null)
-                mvpReference.get().onBaseInformationData(mModel.getBaseInformationData());
-            mModel.httpGetDeviceInfo(new MvpDataCallBack<BaseInformationBean>() {
+            if (TextUtils.isEmpty(serviceIp)) {
+                ToastUtils.show(mvpReference.get(), "请输入服务器Ip");
+                return;
+            }
+            if (TextUtils.isEmpty(servicePort)) {
+                ToastUtils.show(mvpReference.get(), "请输入服务器端口");
+                return;
+            }
+            AppCacheManager.getInstance().setHttpAddressBean(new HttpAddressBean(serviceIp, servicePort));
+            mModel.httpGetDeviceInfo(new MvpDataCallBack<ApiDeviceInfoBean>() {
                 @Override
-                public void onData(BaseInformationBean data) {
-                    mvpReference.get().onBaseInformationData(mModel.getBaseInformationData());
+                public void onData(ApiDeviceInfoBean data) {
+                    mvpReference.get().onDeviceInfoData(data);
                 }
             });
         }

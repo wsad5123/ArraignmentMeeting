@@ -2,8 +2,6 @@ package com.qiaosong.arraignmentmeeting.ui.mvp.model;
 
 import android.content.Context;
 
-import com.qiaosong.arraignmentmeeting.AppCacheManager;
-import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
@@ -13,7 +11,6 @@ import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
 import com.qiaosong.arraignmentmeeting.http.RetrofitHttpParams;
 import com.qiaosong.arraignmentmeeting.http.subscribe.AppSubscribe;
-import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseModel;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.SettingContacts;
 import com.qiaosong.arraignmentmeeting.utils.DeviceUtils;
@@ -62,18 +59,6 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
     @Override
     public List<RegulatorBean> getAllRegulator() {
         return mRegulatorList;
-    }
-
-    @Override
-    public BaseInformationBean getBaseInformationData() {
-        if (AppCacheManager.getInstance().getBaseInformationBean() == null)
-            return null;
-        BaseInformationBean baseInformationBean = AppCacheManager.getInstance().getBaseInformationBean();
-        mProvinceBean = baseInformationBean.getProvinceBean();
-        mCityBean = baseInformationBean.getCityBean();
-        mRegulatorTypeBean = baseInformationBean.getRegulatorTypeBean();
-        mRegulatorBean = baseInformationBean.getRegulatorBean();
-        return baseInformationBean;
     }
 
     /**
@@ -196,7 +181,6 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
         new AppSubscribe(mContext).requestDeviceInfoSave(builder.build(), new ApiObserver<Object>(mContext, true) {
             @Override
             public void onSuccess(Object data) {
-                AppCacheManager.getInstance().setBaseInformationBean(new BaseInformationBean(serviceIp, servicePort, mProvinceBean, mCityBean, mRegulatorTypeBean, mRegulatorBean, deviceName));
                 callBack.onData(true);
             }
 
@@ -210,7 +194,7 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
      * 获取设备信息
      */
     @Override
-    public void httpGetDeviceInfo(MvpDataCallBack<BaseInformationBean> callBack) {
+    public void httpGetDeviceInfo(MvpDataCallBack<ApiDeviceInfoBean> callBack) {
         MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
         builder.addFormDataPart("deviceimei", DeviceUtils.getDeviceId(mContext));
         new AppSubscribe(mContext).requestDeviceInfo(builder.build(), new ApiObserver<ApiDeviceInfoBean>(mContext, true) {
@@ -221,9 +205,7 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
                     mCityBean = new CityBean(data.getAddress().getC_code(), data.getAddress().getC_name());
                     mRegulatorTypeBean = data.getTypename();
                     mRegulatorBean = data.getPrisonunitinfo();
-                    BaseInformationBean baseInformationBean = new BaseInformationBean(data.getDeviceinfo().getServerip(), data.getDeviceinfo().getServerport(), mProvinceBean, mCityBean, mRegulatorTypeBean, mRegulatorBean, data.getDeviceinfo().getDevicename());
-                    AppCacheManager.getInstance().setBaseInformationBean(baseInformationBean);
-                    callBack.onData(baseInformationBean);
+                    callBack.onData(data);
                 }
             }
 

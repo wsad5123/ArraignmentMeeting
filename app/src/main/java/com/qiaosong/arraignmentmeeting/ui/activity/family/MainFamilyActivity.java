@@ -19,6 +19,7 @@ import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
+import com.qiaosong.arraignmentmeeting.ui.activity.AdminPasswordActivity;
 import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
@@ -98,7 +99,7 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.v_setting:
-                startActivity(new Intent(mContext, SettingActivity.class));
+                startActivity(new Intent(mContext, AdminPasswordActivity.class));
                 break;
             case R.id.btn_sure:
                 mvpPresenter.getToken("9467");

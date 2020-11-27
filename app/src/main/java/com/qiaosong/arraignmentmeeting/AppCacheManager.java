@@ -3,8 +3,7 @@ package com.qiaosong.arraignmentmeeting;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.hst.fsp.FspEngine;
-import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
+import com.qiaosong.arraignmentmeeting.bean.HttpAddressBean;
 import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.utils.SharedPreferencesUtils;
 import com.qiaosong.baselibrary.manager.UIManager;
@@ -15,8 +14,7 @@ import com.qiaosong.baselibrary.manager.UIManager;
 public class AppCacheManager {
     private static volatile AppCacheManager instance = null;
     private LoginTokenBean loginTokenBean;
-    private BaseInformationBean baseInformationBean;
-
+    private HttpAddressBean httpAddressBean;
 
     private AppCacheManager() {
     }
@@ -40,18 +38,18 @@ public class AppCacheManager {
         this.loginTokenBean = loginTokenBean;
     }
 
-    public BaseInformationBean getBaseInformationBean() {
-        if (baseInformationBean == null) {
-            String jsonData = SharedPreferencesUtils.getBaseInformationBeanJson(UIManager.getInstance().getBaseContext());
+    public HttpAddressBean getHttpAddressBean() {
+        if (httpAddressBean == null) {
+            String jsonData = SharedPreferencesUtils.getHttpAddressBeanJson(UIManager.getInstance().getBaseContext());
             if (!TextUtils.isEmpty(jsonData)) {
-                baseInformationBean = new Gson().fromJson(jsonData, BaseInformationBean.class);
+                httpAddressBean = new Gson().fromJson(jsonData, HttpAddressBean.class);
             }
         }
-        return baseInformationBean;
+        return httpAddressBean;
     }
 
-    public void setBaseInformationBean(BaseInformationBean baseInformationBean) {
-        this.baseInformationBean = baseInformationBean;
-        SharedPreferencesUtils.setBaseInformationBeanJson(UIManager.getInstance().getBaseContext(), new Gson().toJson(baseInformationBean));
+    public void setHttpAddressBean(HttpAddressBean httpAddressBean) {
+        this.httpAddressBean = httpAddressBean;
+        SharedPreferencesUtils.setHttpAddressBeanJson(UIManager.getInstance().getBaseContext(), httpAddressBean == null ? "" : new Gson().toJson(httpAddressBean));
     }
 }
