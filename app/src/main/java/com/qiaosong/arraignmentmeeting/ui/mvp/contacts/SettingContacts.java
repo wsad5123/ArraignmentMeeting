@@ -1,9 +1,11 @@
 package com.qiaosong.arraignmentmeeting.ui.mvp.contacts;
 
+import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.base.IPresenter;
 import com.qiaosong.arraignmentmeeting.ui.base.IView;
@@ -21,6 +23,8 @@ public class SettingContacts {
         void onGetAllRegulatorType(List<RegulatorTypeBean> data);
 
         void onGetAllRegulator(List<RegulatorBean> data);
+
+        void onBaseInformationData(BaseInformationBean baseInformationBean);
     }
 
     public interface ISettingPresenter extends IPresenter {
@@ -58,6 +62,8 @@ public class SettingContacts {
 
         List<RegulatorBean> getAllRegulator();
 
+        BaseInformationBean getBaseInformationData();
+
         void httpGetAllProvince(MvpDataCallBack<List<ProvinceBean>> callBack);
 
         void httpGetCityByCode(MvpDataCallBack<List<CityBean>> callBack);
@@ -68,7 +74,7 @@ public class SettingContacts {
 
         void httpPostDeviceInfoSave(String serviceIp, String servicePort, String deviceName, MvpDataCallBack<Boolean> callBack);
 
-        void httpGetDeviceInfo();
+        void httpGetDeviceInfo(MvpDataCallBack<BaseInformationBean> callBack);
 
         void setProvinceBean(ProvinceBean provinceBean);
 

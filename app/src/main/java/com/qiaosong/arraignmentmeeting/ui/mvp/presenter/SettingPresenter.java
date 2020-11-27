@@ -2,6 +2,7 @@ package com.qiaosong.arraignmentmeeting.ui.mvp.presenter;
 
 import android.text.TextUtils;
 
+import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
@@ -86,10 +87,20 @@ public class SettingPresenter extends BasePresenter<SettingActivity> implements 
         }
     }
 
+    /**
+     * 获取设备信息回显数据
+     */
     @Override
     public void getDeviceInfo() {
         if (isViewAttach()) {
-            mModel.httpGetDeviceInfo();
+            if (mModel.getBaseInformationData() != null)
+                mvpReference.get().onBaseInformationData(mModel.getBaseInformationData());
+            mModel.httpGetDeviceInfo(new MvpDataCallBack<BaseInformationBean>() {
+                @Override
+                public void onData(BaseInformationBean data) {
+                    mvpReference.get().onBaseInformationData(mModel.getBaseInformationData());
+                }
+            });
         }
     }
 

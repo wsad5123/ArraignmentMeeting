@@ -32,7 +32,7 @@ public class VideoPrisonerPresenter extends BasePresenter<VideoPrisonerActivity>
             Observable.create(new ObservableOnSubscribe<String>() {
                 @Override
                 public void subscribe(ObservableEmitter<String> emitter) throws InterruptedException {
-                    while (!mModel.isBegin()) {
+                    while (isViewAttach() && !mModel.isBegin()) {
                         emitter.onNext("");
                         Thread.sleep(2000);
                     }

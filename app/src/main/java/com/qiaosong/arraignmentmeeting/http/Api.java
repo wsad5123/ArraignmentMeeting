@@ -8,6 +8,7 @@ import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class Api {
 
         //获取设备信息
         @POST("deviceinfo/detail")
-        Observable<ApiResultBean<Object>> requestDeviceInfo(@Body MultipartBody body);
+        Observable<ApiResultBean<ApiDeviceInfoBean>> requestDeviceInfo(@Body MultipartBody body);
 
     }
 }

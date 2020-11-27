@@ -9,6 +9,7 @@ import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.http.Api;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
@@ -119,9 +120,9 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestDeviceInfo(MultipartBody params, ApiObserver<Object> mObservable) {
+    public void requestDeviceInfo(MultipartBody params, ApiObserver<ApiDeviceInfoBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
-        Observable<ApiResultBean<Object>> observable = apiService.requestDeviceInfo(params);
+        Observable<ApiResultBean<ApiDeviceInfoBean>> observable = apiService.requestDeviceInfo(params);
         subscribe(observable, mObservable);
     }
 

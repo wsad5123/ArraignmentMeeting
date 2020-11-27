@@ -8,6 +8,14 @@ public class CityBean {
     @SerializedName("c_name")
     private String name;
 
+    public CityBean() {
+    }
+
+    public CityBean(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public String getCode() {
         return code;
     }

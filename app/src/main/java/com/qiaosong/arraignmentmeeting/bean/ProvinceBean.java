@@ -8,6 +8,14 @@ public class ProvinceBean {
     @SerializedName("p_name")
     private String name;
 
+    public ProvinceBean() {
+    }
+
+    public ProvinceBean(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public String getCode() {
         return code;
     }

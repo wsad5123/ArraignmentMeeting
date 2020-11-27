@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
@@ -140,6 +141,22 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
         }
         mRegulatorSelectDialog.initData(data);
         mRegulatorSelectDialog.show();
+    }
+
+    /**
+     * 当获得基础信息
+     *
+     * @param baseInformationBean
+     */
+    @Override
+    public void onBaseInformationData(BaseInformationBean baseInformationBean) {
+        etIp.setText(baseInformationBean.getServiceIp());
+        etPort.setText(baseInformationBean.getServicePort());
+        etDeviceName.setText(baseInformationBean.getDeviceName());
+        tvProvince.setText(baseInformationBean.getProvinceBean().getName());
+        tvCity.setText(baseInformationBean.getCityBean().getName());
+        tvType.setText(baseInformationBean.getRegulatorTypeBean().getPtypename());
+        tvName.setText(baseInformationBean.getRegulatorBean().getPrisonname());
     }
 
     @OnClick({R.id.tv_province, R.id.tv_city, R.id.tv_type, R.id.tv_name, R.id.btn_save})

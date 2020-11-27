@@ -1,7 +1,13 @@
 package com.qiaosong.arraignmentmeeting;
 
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
 import com.hst.fsp.FspEngine;
+import com.qiaosong.arraignmentmeeting.bean.BaseInformationBean;
 import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
+import com.qiaosong.arraignmentmeeting.utils.SharedPreferencesUtils;
+import com.qiaosong.baselibrary.manager.UIManager;
 
 /**
  * APP全局数据缓存类
@@ -9,6 +15,7 @@ import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 public class AppCacheManager {
     private static volatile AppCacheManager instance = null;
     private LoginTokenBean loginTokenBean;
+    private BaseInformationBean baseInformationBean;
 
 
     private AppCacheManager() {
@@ -33,4 +40,18 @@ public class AppCacheManager {
         this.loginTokenBean = loginTokenBean;
     }
 
+    public BaseInformationBean getBaseInformationBean() {
+        if (baseInformationBean == null) {
+            String jsonData = SharedPreferencesUtils.getBaseInformationBeanJson(UIManager.getInstance().getBaseContext());
+            if (!TextUtils.isEmpty(jsonData)) {
+                baseInformationBean = new Gson().fromJson(jsonData, BaseInformationBean.class);
+            }
+        }
+        return baseInformationBean;
+    }
+
+    public void setBaseInformationBean(BaseInformationBean baseInformationBean) {
+        this.baseInformationBean = baseInformationBean;
+        SharedPreferencesUtils.setBaseInformationBeanJson(UIManager.getInstance().getBaseContext(), new Gson().toJson(baseInformationBean));
+    }
 }
