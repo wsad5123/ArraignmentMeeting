@@ -102,6 +102,7 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
                 startActivity(new Intent(mContext, AdminPasswordActivity.class));
                 break;
             case R.id.btn_sure:
+                //Todo
                 mvpPresenter.getToken("9467");
                 break;
         }

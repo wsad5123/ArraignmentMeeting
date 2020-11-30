@@ -15,6 +15,7 @@ public class AppCacheManager {
     private static volatile AppCacheManager instance = null;
     private LoginTokenBean loginTokenBean;
     private HttpAddressBean httpAddressBean;
+    private String deviceUuid;
 
     private AppCacheManager() {
     }
@@ -52,4 +53,18 @@ public class AppCacheManager {
         this.httpAddressBean = httpAddressBean;
         SharedPreferencesUtils.setHttpAddressBeanJson(UIManager.getInstance().getBaseContext(), httpAddressBean == null ? "" : new Gson().toJson(httpAddressBean));
     }
+
+    public String getDeviceUuid() {
+        if (TextUtils.isEmpty(deviceUuid)) {
+            deviceUuid = SharedPreferencesUtils.getDeviceUuid(UIManager.getInstance().getBaseContext());
+        }
+        return deviceUuid;
+    }
+
+    public void setDeviceUuid(String deviceUuid) {
+        this.deviceUuid = deviceUuid;
+        SharedPreferencesUtils.setDeviceUuid(UIManager.getInstance().getBaseContext(), TextUtils.isEmpty(deviceUuid) ? "" : deviceUuid);
+    }
 }
+
+

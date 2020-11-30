@@ -40,7 +40,7 @@ public class VideoWaitActivity extends BaseActivity {
             public void run() {
                 FspEngineManager.getInstance().joinGroup(AppCacheManager.getInstance().getLoginTokenBean().getGroupId());
             }
-        }, 10000);
+        }, 3000);
     }
 
     @Override

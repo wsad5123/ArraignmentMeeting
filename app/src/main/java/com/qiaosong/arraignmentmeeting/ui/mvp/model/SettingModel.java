@@ -2,11 +2,15 @@ package com.qiaosong.arraignmentmeeting.ui.mvp.model;
 
 import android.content.Context;
 
+import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.DeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.FunitBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
 import com.qiaosong.arraignmentmeeting.http.RetrofitHttpParams;
@@ -26,11 +30,12 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
     private List<ProvinceBean> mProvinceList;
     private List<CityBean> mCityList;
     private List<RegulatorTypeBean> mRegulatorTypeList;
-    private List<RegulatorBean> mRegulatorList;
+    private ApiRegulatorBean mRegulatorBean;
     private ProvinceBean mProvinceBean;
     private CityBean mCityBean;
     private RegulatorTypeBean mRegulatorTypeBean;
-    private RegulatorBean mRegulatorBean;
+    private PrisonBean mPrisonBean;
+    private FunitBean mFunitBean;
 
     public SettingModel(Context mContext) {
         super(mContext);
@@ -57,8 +62,8 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
     }
 
     @Override
-    public List<RegulatorBean> getAllRegulator() {
-        return mRegulatorList;
+    public ApiRegulatorBean getAllRegulator() {
+        return mRegulatorBean;
     }
 
     /**
@@ -132,19 +137,19 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
     }
 
     @Override
-    public void httpGetRegulators(MvpDataCallBack<List<RegulatorBean>> callBack) {
+    public void httpGetRegulators(MvpDataCallBack<ApiRegulatorBean> callBack) {
         if (mProvinceBean == null || mCityBean == null || mRegulatorTypeBean == null)
             return;
         MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
         builder.addFormDataPart("typeuuid", mRegulatorTypeBean.getPtypeuuid());
         builder.addFormDataPart("pcode", mProvinceBean.getCode());
         builder.addFormDataPart("cccode", mCityBean.getCode());
-        new AppSubscribe(mContext).requestAllRegulator(builder.build(), new ApiObserver<List<RegulatorBean>>(mContext, true) {
+        new AppSubscribe(mContext).requestAllRegulator(builder.build(), new ApiObserver<ApiRegulatorBean>(mContext, true) {
             @Override
-            public void onSuccess(List<RegulatorBean> data) {
+            public void onSuccess(ApiRegulatorBean data) {
                 if (data != null) {
-                    mRegulatorList = data;
-                    callBack.onData(mRegulatorList);
+                    mRegulatorBean = data;
+                    callBack.onData(mRegulatorBean);
                 }
             }
 
@@ -164,7 +169,7 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
      */
     @Override
     public void httpPostDeviceInfoSave(String serviceIp, String servicePort, String deviceName, MvpDataCallBack<Boolean> callBack) {
-        if (mProvinceBean == null || mCityBean == null || mRegulatorTypeBean == null || mRegulatorBean == null) {
+        if (mProvinceBean == null || mCityBean == null || mRegulatorTypeBean == null || (mPrisonBean == null && mFunitBean == null)) {
             ToastUtils.show(mContext, "请选择单位名称");
             return;
         }
@@ -175,13 +180,16 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
         builder.addFormDataPart("deviceType", "");
         builder.addFormDataPart("ptypeuuid", mRegulatorTypeBean.getPtypeuuid());
         builder.addFormDataPart("deviceName", deviceName);
-        builder.addFormDataPart("subFromUUID", mRegulatorBean.getPrisonuuid());
+        builder.addFormDataPart("subFromUUID", mPrisonBean == null ? mFunitBean.getFunitUUID() : mPrisonBean.getPrisonUUID());
         builder.addFormDataPart("serverIP", serviceIp);
         builder.addFormDataPart("serverPort", servicePort);
-        new AppSubscribe(mContext).requestDeviceInfoSave(builder.build(), new ApiObserver<Object>(mContext, true) {
+        new AppSubscribe(mContext).requestDeviceInfoSave(builder.build(), new ApiObserver<DeviceInfoBean>(mContext, true) {
             @Override
-            public void onSuccess(Object data) {
-                callBack.onData(true);
+            public void onSuccess(DeviceInfoBean data) {
+                if (data != null) {
+                    AppCacheManager.getInstance().setDeviceUuid(data.getDevicuuid());
+                    callBack.onData(true);
+                }
             }
 
             @Override
@@ -200,11 +208,13 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
         new AppSubscribe(mContext).requestDeviceInfo(builder.build(), new ApiObserver<ApiDeviceInfoBean>(mContext, true) {
             @Override
             public void onSuccess(ApiDeviceInfoBean data) {
-                if (data != null && data.getAddress() != null && data.getDeviceinfo() != null && data.getPrisonunitinfo() != null && data.getTypename() != null) {
+                if (data != null && data.getAddress() != null && data.getDeviceinfo() != null && (data.getPrisonBean() != null || data.getUnitinfo() != null) && data.getTypename() != null) {
+                    AppCacheManager.getInstance().setDeviceUuid(data.getDeviceinfo().getDevicuuid());
                     mProvinceBean = new ProvinceBean(data.getAddress().getP_code(), data.getAddress().getP_name());
                     mCityBean = new CityBean(data.getAddress().getC_code(), data.getAddress().getC_name());
                     mRegulatorTypeBean = data.getTypename();
-                    mRegulatorBean = data.getPrisonunitinfo();
+                    mPrisonBean = data.getPrisonBean();
+                    mFunitBean = data.getUnitinfo();
                     callBack.onData(data);
                 }
             }
@@ -236,8 +246,13 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
     }
 
     @Override
-    public void setRegulatorBean(RegulatorBean regulatorBean) {
-        this.mRegulatorBean = regulatorBean;
+    public void setPrisonBean(PrisonBean prisonBean) {
+        this.mPrisonBean = prisonBean;
+    }
+
+    @Override
+    public void setFunitBean(FunitBean funitBean) {
+        this.mFunitBean = funitBean;
     }
 
     @Override
@@ -248,8 +263,9 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
 
     @Override
     public void removeRegulatorData() {
+        mFunitBean = null;
+        mPrisonBean = null;
         mRegulatorBean = null;
-        mRegulatorList = null;
     }
 
 

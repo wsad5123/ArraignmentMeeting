@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiaosong.arraignmentmeeting.R;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.FunitBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorSelectListener;
-import com.qiaosong.arraignmentmeeting.ui.adapter.RegulatorSelectAdapter;
+import com.qiaosong.arraignmentmeeting.ui.adapter.FunitSelectAdapter;
+import com.qiaosong.arraignmentmeeting.ui.adapter.PrisonSelectAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseViewHolder;
 
 import java.util.List;
@@ -42,8 +45,13 @@ public class RegulatorSelectDialog {
             mDialog.show();
     }
 
-    public void initData(List<RegulatorBean> data) {
-        mViewHolder.initData(data);
+    public void initData(ApiRegulatorBean bean) {
+        if (bean.getUnitData() != null) {
+            mViewHolder.initFunitData(bean.getUnitData());
+        }
+        if (bean.getPrisonData() != null) {
+            mViewHolder.initPrisonData(bean.getPrisonData());
+        }
     }
 
     public void setOnRegulatorSelectListener(OnRegulatorSelectListener onRegulatorSelectListener) {
@@ -55,10 +63,14 @@ public class RegulatorSelectDialog {
         @BindView(R.id.rv_content)
         RecyclerView rvContent;
 
-        RegulatorSelectAdapter adapter;
+        PrisonSelectAdapter prisonSelectAdapter;
+        FunitSelectAdapter funitSelectAdapter;
 
         public ViewHolder(Context mContext) {
             super(mContext);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+            linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+            rvContent.setLayoutManager(linearLayoutManager);
         }
 
         @Override
@@ -66,16 +78,23 @@ public class RegulatorSelectDialog {
             return R.layout.dialog_select;
         }
 
-        public void initData(List<RegulatorBean> data) {
-            if (adapter == null) {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                rvContent.setLayoutManager(linearLayoutManager);
-                adapter = new RegulatorSelectAdapter(mContext, data);
-                adapter.setOnRegulatorSelectListener(onRegulatorSelectListener);
-                rvContent.setAdapter(adapter);
+        public void initPrisonData(List<PrisonBean> data) {
+            if (prisonSelectAdapter == null) {
+                prisonSelectAdapter = new PrisonSelectAdapter(mContext, data);
+                prisonSelectAdapter.setOnRegulatorSelectListener(onRegulatorSelectListener);
+                rvContent.setAdapter(prisonSelectAdapter);
             } else {
-                adapter.updateData(data);
+                prisonSelectAdapter.updateData(data);
+            }
+        }
+
+        private void initFunitData(List<FunitBean> data) {
+            if (funitSelectAdapter == null) {
+                funitSelectAdapter = new FunitSelectAdapter(mContext, data);
+                funitSelectAdapter.setOnRegulatorSelectListener(onRegulatorSelectListener);
+                rvContent.setAdapter(funitSelectAdapter);
+            } else {
+                funitSelectAdapter.updateData(data);
             }
         }
     }

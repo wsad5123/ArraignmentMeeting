@@ -1,6 +1,6 @@
 package com.qiaosong.arraignmentmeeting.bean;
 
-public class RegulatorBean {
+public class ApiPrisonBean {
     private String prisonid;
     private String prisonuuid;
     private String prisontypeuuid;

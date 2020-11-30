@@ -5,11 +5,13 @@ import android.content.Context;
 import com.qiaosong.arraignmentmeeting.bean.BeginMeetBean;
 import com.qiaosong.arraignmentmeeting.bean.CardIdRoomIdBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.DeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.http.Api;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
@@ -98,9 +100,9 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestAllRegulator(MultipartBody params, ApiObserver<List<RegulatorBean>> mObservable) {
+    public void requestAllRegulator(MultipartBody params, ApiObserver<ApiRegulatorBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
-        Observable<ApiResultBean<List<RegulatorBean>>> observable = apiService.requestAllRegulator(params);
+        Observable<ApiResultBean<ApiRegulatorBean>> observable = apiService.requestAllRegulator(params);
         subscribe(observable, mObservable);
     }
 
@@ -109,9 +111,9 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestDeviceInfoSave(MultipartBody params, ApiObserver<Object> mObservable) {
+    public void requestDeviceInfoSave(MultipartBody params, ApiObserver<DeviceInfoBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
-        Observable<ApiResultBean<Object>> observable = apiService.requestDeviceInfoSave(params);
+        Observable<ApiResultBean<DeviceInfoBean>> observable = apiService.requestDeviceInfoSave(params);
         subscribe(observable, mObservable);
     }
 

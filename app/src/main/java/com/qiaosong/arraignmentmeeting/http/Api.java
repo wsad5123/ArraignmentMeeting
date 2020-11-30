@@ -4,11 +4,13 @@ package com.qiaosong.arraignmentmeeting.http;
 import com.qiaosong.arraignmentmeeting.bean.BeginMeetBean;
 import com.qiaosong.arraignmentmeeting.bean.CardIdRoomIdBean;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.DeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.bean.LoginTokenBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
 
 import java.util.List;
@@ -46,12 +48,12 @@ public class Api {
         Observable<ApiResultBean<List<RegulatorTypeBean>>> requestAllRegulatorType(@Body MultipartBody body);
 
         //获取所有监管机构类型
-        @POST("prisonunitinfo/getPrisonListByType")
-        Observable<ApiResultBean<List<RegulatorBean>>> requestAllRegulator(@Body MultipartBody body);
+        @POST("prisonunitinfo/getUnitListByType")
+        Observable<ApiResultBean<ApiRegulatorBean>> requestAllRegulator(@Body MultipartBody body);
 
         //设备信息保存
         @POST("deviceinfo/createOrUpdate")
-        Observable<ApiResultBean<Object>> requestDeviceInfoSave(@Body MultipartBody body);
+        Observable<ApiResultBean<DeviceInfoBean>> requestDeviceInfoSave(@Body MultipartBody body);
 
         //获取设备信息
         @POST("deviceinfo/detail")

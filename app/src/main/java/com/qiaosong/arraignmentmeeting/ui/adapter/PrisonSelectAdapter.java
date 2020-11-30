@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.qiaosong.arraignmentmeeting.R;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorSelectListener;
 import com.qiaosong.arraignmentmeeting.ui.adapter.base.BaseRecyclerAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseViewHolder;
@@ -16,15 +16,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegulatorSelectAdapter extends BaseRecyclerAdapter<RegulatorBean> {
+public class PrisonSelectAdapter extends BaseRecyclerAdapter<PrisonBean> {
     private OnRegulatorSelectListener onRegulatorSelectListener;
 
-    public RegulatorSelectAdapter(Context mContext, List<RegulatorBean> mData) {
+    public PrisonSelectAdapter(Context mContext, List<PrisonBean> mData) {
         super(mContext, mData);
     }
 
     @Override
-    public BaseViewHolder<RegulatorBean> initViewHolder(ViewGroup parent, int view) {
+    public BaseViewHolder<PrisonBean> initViewHolder(ViewGroup parent, int view) {
         return new ViewHolder(mContext, parent);
     }
 
@@ -32,12 +32,12 @@ public class RegulatorSelectAdapter extends BaseRecyclerAdapter<RegulatorBean> {
         this.onRegulatorSelectListener = onRegulatorSelectListener;
     }
 
-    class ViewHolder extends BaseViewHolder<RegulatorBean> {
+    class ViewHolder extends BaseViewHolder<PrisonBean> {
 
         @BindView(R.id.tv_name)
         TextView tvName;
 
-        RegulatorBean bean;
+        PrisonBean bean;
 
         public ViewHolder(Context mContext, ViewGroup parent) {
             super(mContext, parent);
@@ -49,16 +49,16 @@ public class RegulatorSelectAdapter extends BaseRecyclerAdapter<RegulatorBean> {
         }
 
         @Override
-        public void initData(int position, RegulatorBean obj) {
+        public void initData(int position, PrisonBean obj) {
             super.initData(position, obj);
             bean = obj;
-            tvName.setText(obj.getPrisonname());
+            tvName.setText(obj.getPrisonName());
         }
 
         @OnClick(R.id.tv_name)
         public void onClick(View view) {
             if (onRegulatorSelectListener != null)
-                onRegulatorSelectListener.onSelect(bean);
+                onRegulatorSelectListener.onSelect(bean, null);
         }
     }
 

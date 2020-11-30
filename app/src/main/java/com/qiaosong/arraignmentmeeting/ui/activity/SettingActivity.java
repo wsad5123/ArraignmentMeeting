@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.FunitBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.OnCitySelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnProvinceSelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorSelectListener;
@@ -140,7 +142,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     }
 
     @Override
-    public void onGetAllRegulator(List<RegulatorBean> data) {
+    public void onGetAllRegulator(ApiRegulatorBean data) {
         if (mRegulatorSelectDialog == null) {
             mRegulatorSelectDialog = new RegulatorSelectDialog(mContext);
             mRegulatorSelectDialog.setOnRegulatorSelectListener(onRegulatorSelectListener);
@@ -160,7 +162,12 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
         tvProvince.setText(deviceInfo.getAddress().getP_name());
         tvCity.setText(deviceInfo.getAddress().getC_name());
         tvType.setText(deviceInfo.getTypename().getPtypename());
-        tvName.setText(deviceInfo.getPrisonunitinfo().getPrisonname());
+        if (deviceInfo.getPrisonBean() != null) {
+            tvName.setText(deviceInfo.getPrisonBean().getPrisonName());
+        } else if (deviceInfo.getUnitinfo() != null) {
+            tvName.setText(deviceInfo.getUnitinfo().getFunitName());
+        }
+
     }
 
     @OnClick({R.id.tv_province, R.id.tv_city, R.id.tv_type, R.id.tv_name, R.id.tv_service_ip, R.id.tv_location_ip, R.id.btn_save})
@@ -240,9 +247,16 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
      */
     OnRegulatorSelectListener onRegulatorSelectListener = new OnRegulatorSelectListener() {
         @Override
-        public void onSelect(RegulatorBean bean) {
-            tvName.setText(bean.getPrisonname());
-            mvpPresenter.setRegulatorBean(bean);
+        public void onSelect(PrisonBean prisonBean, FunitBean funitBean) {
+            if (prisonBean != null) {
+                tvName.setText(prisonBean.getPrisonName());
+                mvpPresenter.setPrisonBean(prisonBean);
+            }
+            if (funitBean != null) {
+                tvName.setText(funitBean.getFunitName());
+                mvpPresenter.setFunitBean(funitBean);
+            }
+
             mRegulatorSelectDialog.dismiss();
         }
     };

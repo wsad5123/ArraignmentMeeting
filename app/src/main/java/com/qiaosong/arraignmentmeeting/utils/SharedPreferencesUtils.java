@@ -9,6 +9,7 @@ public class SharedPreferencesUtils {
     private static final String FILE_NAME = "ArraignmentMeeting";
 
     public static final String HTTP_ADDRESS_BEAN_JSON = "http_address_bean_json";//网络地址
+    public static final String DEVICE_UUID = "device_uuid";//设备唯一号
 
 
     public static void setHttpAddressBeanJson(Context context, String jsonData) {
@@ -17,6 +18,14 @@ public class SharedPreferencesUtils {
 
     public static String getHttpAddressBeanJson(Context context) {
         return (String) getData(context, HTTP_ADDRESS_BEAN_JSON, "");
+    }
+
+    public static void setDeviceUuid(Context context, String jsonData) {
+        saveData(context, DEVICE_UUID, jsonData);
+    }
+
+    public static String getDeviceUuid(Context context) {
+        return (String) getData(context, DEVICE_UUID, "");
     }
 
     /**

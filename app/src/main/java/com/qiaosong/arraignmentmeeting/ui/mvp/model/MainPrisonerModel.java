@@ -35,6 +35,7 @@ public class MainPrisonerModel extends BaseModel implements MainPrisonerContacts
     public void httpGetToken(String code, MvpDataCallBack<LoginTokenBean> callBack) {
         MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
         builder.addFormDataPart("mettingCode", code);
+        builder.addFormDataPart("deviceUUID", AppCacheManager.getInstance().getDeviceUuid());
         new AppSubscribe(mContext).requestValidateToken(builder.build(), new ApiObserver<LoginTokenBean>(mContext, true) {
             @Override
             public void onSuccess(LoginTokenBean data) {

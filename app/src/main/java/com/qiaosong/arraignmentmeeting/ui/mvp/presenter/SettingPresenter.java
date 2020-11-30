@@ -4,11 +4,13 @@ import android.text.TextUtils;
 
 import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.FunitBean;
 import com.qiaosong.arraignmentmeeting.bean.HttpAddressBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BasePresenter;
@@ -80,9 +82,9 @@ public class SettingPresenter extends BasePresenter<SettingActivity> implements 
             if (mModel.getAllRegulator() != null && !mModel.getAllRegulator().isEmpty())
                 mvpReference.get().onGetAllRegulator(mModel.getAllRegulator());
             else
-                mModel.httpGetRegulators(new MvpDataCallBack<List<RegulatorBean>>() {
+                mModel.httpGetRegulators(new MvpDataCallBack<ApiRegulatorBean>() {
                     @Override
-                    public void onData(List<RegulatorBean> data) {
+                    public void onData(ApiRegulatorBean data) {
                         mvpReference.get().onGetAllRegulator(data);
                     }
                 });
@@ -165,9 +167,16 @@ public class SettingPresenter extends BasePresenter<SettingActivity> implements 
     }
 
     @Override
-    public void setRegulatorBean(RegulatorBean regulatorBean) {
+    public void setPrisonBean(PrisonBean regulatorBean) {
         if (isViewAttach()) {
-            mModel.setRegulatorBean(regulatorBean);
+            mModel.setPrisonBean(regulatorBean);
+        }
+    }
+
+    @Override
+    public void setFunitBean(FunitBean unitBean) {
+        if (isViewAttach()) {
+            mModel.setFunitBean(unitBean);
         }
     }
 

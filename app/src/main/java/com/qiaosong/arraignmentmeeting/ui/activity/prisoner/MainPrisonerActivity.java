@@ -98,6 +98,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
                 startActivity(new Intent(mContext, AdminPasswordActivity.class));
                 break;
             case R.id.btn_sure:
+                //Todo
                 mvpPresenter.getOrderCodeByCrimanalsCardId("312156555569874562");//mCardIdInputAdapter.getId());
                 break;
         }

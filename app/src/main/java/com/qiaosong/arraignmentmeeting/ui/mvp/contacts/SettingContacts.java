@@ -1,10 +1,12 @@
 package com.qiaosong.arraignmentmeeting.ui.mvp.contacts;
 
 import com.qiaosong.arraignmentmeeting.bean.CityBean;
+import com.qiaosong.arraignmentmeeting.bean.FunitBean;
 import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
-import com.qiaosong.arraignmentmeeting.bean.RegulatorBean;
+import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.base.IPresenter;
 import com.qiaosong.arraignmentmeeting.ui.base.IView;
@@ -21,7 +23,7 @@ public class SettingContacts {
 
         void onGetAllRegulatorType(List<RegulatorTypeBean> data);
 
-        void onGetAllRegulator(List<RegulatorBean> data);
+        void onGetAllRegulator(ApiRegulatorBean data);
 
         void onDeviceInfoData(ApiDeviceInfoBean deviceInfo);
     }
@@ -45,7 +47,9 @@ public class SettingContacts {
 
         void setRegulatorTypeBean(RegulatorTypeBean regulatorTypeBean);
 
-        void setRegulatorBean(RegulatorBean regulatorBean);
+        void setPrisonBean(PrisonBean regulatorBean);
+
+        void setFunitBean(FunitBean unitBean);
 
         void removeCityData();
 
@@ -59,7 +63,7 @@ public class SettingContacts {
 
         List<RegulatorTypeBean> getAllRegulatorType();
 
-        List<RegulatorBean> getAllRegulator();
+        ApiRegulatorBean getAllRegulator();
 
         void httpGetAllProvince(MvpDataCallBack<List<ProvinceBean>> callBack);
 
@@ -67,7 +71,7 @@ public class SettingContacts {
 
         void httpGetRegulatorsType(MvpDataCallBack<List<RegulatorTypeBean>> callBack);
 
-        void httpGetRegulators(MvpDataCallBack<List<RegulatorBean>> callBack);
+        void httpGetRegulators(MvpDataCallBack<ApiRegulatorBean> callBack);
 
         void httpPostDeviceInfoSave(String serviceIp, String servicePort, String deviceName, MvpDataCallBack<Boolean> callBack);
 
@@ -79,7 +83,9 @@ public class SettingContacts {
 
         void setRegulatorTypeBean(RegulatorTypeBean regulatorBean);
 
-        void setRegulatorBean(RegulatorBean regulatorBean);
+        void setPrisonBean(PrisonBean regulatorBean);
+
+        void setFunitBean(FunitBean funitBean);
 
         void removeCityData();
 
