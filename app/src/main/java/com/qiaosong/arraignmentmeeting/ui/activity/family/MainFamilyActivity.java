@@ -27,6 +27,7 @@ import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainFamilyPresenter;
 import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
+import com.qiaosong.baselibrary.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -102,8 +103,13 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
                 startActivity(new Intent(mContext, AdminPasswordActivity.class));
                 break;
             case R.id.btn_sure:
-                //Todo
-                mvpPresenter.getToken("9075");
+                if (stringBuffer.length() == 4) {
+                    mvpPresenter.getToken(stringBuffer.toString());
+                } else {
+                    ToastUtils.show(mContext, "请输入4位会见码");
+                }
+//                Todo
+//                mvpPresenter.getToken("9075");
                 break;
         }
     }

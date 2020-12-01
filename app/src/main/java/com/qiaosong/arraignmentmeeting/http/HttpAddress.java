@@ -15,9 +15,9 @@ public class HttpAddress {
      * @return
      */
     public static String getServerAddress() {
-//        if (AppCacheManager.getInstance().getHttpAddressBean() != null && !TextUtils.isEmpty(AppCacheManager.getInstance().getHttpAddressBean().getIp()) && !TextUtils.isEmpty(AppCacheManager.getInstance().getHttpAddressBean().getPort())) {
-//            return "http://" + AppCacheManager.getInstance().getHttpAddressBean().getIp() + ":" + AppCacheManager.getInstance().getHttpAddressBean().getPort() + "/";
-//        }//Todo
+        if (AppCacheManager.getInstance().getHttpAddressBean() != null && !TextUtils.isEmpty(AppCacheManager.getInstance().getHttpAddressBean().getIp()) && !TextUtils.isEmpty(AppCacheManager.getInstance().getHttpAddressBean().getPort())) {
+            return "http://" + AppCacheManager.getInstance().getHttpAddressBean().getIp() + ":" + AppCacheManager.getInstance().getHttpAddressBean().getPort() + "/";
+        }//Todo
         return BuildConfig.baseApiUrl;
     }
 }

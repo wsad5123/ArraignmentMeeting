@@ -99,7 +99,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
                 break;
             case R.id.btn_sure:
                 //Todo
-                mvpPresenter.getOrderCodeByCrimanalsCardId("222133222211111111");//mCardIdInputAdapter.getId());
+                mvpPresenter.getOrderCodeByCrimanalsCardId(/*"222133222211111111");*/mCardIdInputAdapter.getId());
                 break;
         }
     }
