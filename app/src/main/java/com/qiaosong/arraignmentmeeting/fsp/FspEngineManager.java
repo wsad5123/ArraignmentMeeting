@@ -62,12 +62,16 @@ public class FspEngineManager implements IFspEngineEventHandler {
         fspEngine.startPreviewVideo(surfaceView);
     }
 
+    public void setRemoteVideoRender(String userId, String videoId, SurfaceView renderView, int renderMode) {
+        fspEngine.setRemoteVideoRender(userId, videoId, renderView, renderMode);
+    }
+
     public void startPublishVideo() {
         fspEngine.startPublishVideo();
     }
 
-    public void setRemoteVideoRender(String userId, String videoId, SurfaceView renderView, int renderMode) {
-        fspEngine.setRemoteVideoRender(userId, videoId, renderView, renderMode);
+    public void stopPublishVideo() {
+        fspEngine.stopPublishVideo();
     }
 
     public void startPublishAudio() {

@@ -1,5 +1,6 @@
 package com.qiaosong.arraignmentmeeting.ui.mvp.presenter;
 
+import com.qiaosong.arraignmentmeeting.bean.api.ApiMeetBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.activity.family.VideoFamilyActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BasePresenter;
@@ -31,9 +32,9 @@ public class VideoFamilyPresenter extends BasePresenter<VideoFamilyActivity> imp
             Observable.create(new ObservableOnSubscribe<String>() {
                 @Override
                 public void subscribe(ObservableEmitter<String> emitter) throws InterruptedException {
-                    while (isViewAttach() && !mModel.isBegin()) {
+                    while (isViewAttach() && (mModel.getMeetingBean() == null || !mModel.getMeetingBean().isEnd())) {
                         emitter.onNext("");
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     }
                 }
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
@@ -43,11 +44,11 @@ public class VideoFamilyPresenter extends BasePresenter<VideoFamilyActivity> imp
 
                 @Override
                 public void onNext(String s) {
-                    mModel.getHttpIsBeginMeeting(new MvpDataCallBack<Boolean>() {
+                    mModel.getHttpIsBeginMeeting(new MvpDataCallBack<ApiMeetBean>() {
                         @Override
-                        public void onData(Boolean data) {
+                        public void onData(ApiMeetBean data) {
                             if (isViewAttach())
-                                mvpReference.get().onIsBeginVideo();
+                                mvpReference.get().onIsBeginVideo(data.getSeatinfo(), data.getResttime());
                         }
                     });
                 }

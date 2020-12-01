@@ -1,13 +1,14 @@
 package com.qiaosong.arraignmentmeeting.ui.mvp.contacts;
 
+import com.qiaosong.arraignmentmeeting.bean.MeetingBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiMeetBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.ui.base.IPresenter;
 import com.qiaosong.arraignmentmeeting.ui.base.IView;
 
 public class VideoPrisonerContacts {
     public interface IVideoPrisonerView extends IView {
-
-        void onIsBeginVideo();
+        void onIsBeginVideo(MeetingBean meetingBean, String restTime);
 
     }
 
@@ -17,8 +18,10 @@ public class VideoPrisonerContacts {
     }
 
     public interface IVideoPrisonerModel {
-        void getHttpIsBeginMeeting(MvpDataCallBack<Boolean> callBack);
+        void getHttpIsBeginMeeting(MvpDataCallBack<ApiMeetBean> callBack);
 
-        boolean isBegin();
+        String getRestTime();
+
+        MeetingBean getMeetingBean();
     }
 }

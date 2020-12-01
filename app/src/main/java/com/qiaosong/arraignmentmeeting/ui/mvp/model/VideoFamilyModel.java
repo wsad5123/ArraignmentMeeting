@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.bean.BeginMeetBean;
+import com.qiaosong.arraignmentmeeting.bean.MeetingBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiMeetBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
 import com.qiaosong.arraignmentmeeting.http.RetrofitHttpParams;
@@ -14,7 +16,9 @@ import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.VideoFamilyContacts;
 import okhttp3.MultipartBody;
 
 public class VideoFamilyModel extends BaseModel implements VideoFamilyContacts.IVideoFamilyModel {
-    private boolean isBegin;
+    private MeetingBean meetingBean;
+    private long timeStamp;
+    private String restTime;
 
     public VideoFamilyModel(Context mContext) {
         super(mContext);
@@ -24,15 +28,20 @@ public class VideoFamilyModel extends BaseModel implements VideoFamilyContacts.I
      * 获取是否开始会见
      */
     @Override
-    public void getHttpIsBeginMeeting(MvpDataCallBack<Boolean> callBack) {
+    public void getHttpIsBeginMeeting(MvpDataCallBack<ApiMeetBean> callBack) {
         MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
         builder.addFormDataPart("meettingCode", AppCacheManager.getInstance().getLoginTokenBean().getGroupId());
-        new AppSubscribe(mContext).requestIsbeginMeetting(builder.build(), new ApiObserver<BeginMeetBean>(mContext) {
+        builder.addFormDataPart("timestamp", String.valueOf(System.currentTimeMillis()));
+        new AppSubscribe(mContext).requestIsbeginMeetting(builder.build(), new ApiObserver<ApiMeetBean>(mContext) {
             @Override
-            public void onSuccess(BeginMeetBean data) {
-                if (data != null && data.getIsbegin()) {
-                    isBegin = true;
-                    callBack.onData(data.getIsbegin());
+            public void onSuccess(ApiMeetBean data) {
+                if (data != null) {
+                    if (data.getTimestamp() > timeStamp) {
+                        timeStamp = data.getTimestamp();
+                        restTime = data.getResttime();
+                        meetingBean = data.getSeatinfo();
+                        callBack.onData(data);
+                    }
                 }
             }
 
@@ -42,13 +51,14 @@ public class VideoFamilyModel extends BaseModel implements VideoFamilyContacts.I
         });
     }
 
-    /**
-     * 是否开始视频
-     *
-     * @return
-     */
     @Override
-    public boolean isBegin() {
-        return isBegin;
+    public String getRestTime() {
+        return restTime;
     }
+
+    @Override
+    public MeetingBean getMeetingBean() {
+        return meetingBean;
+    }
+
 }

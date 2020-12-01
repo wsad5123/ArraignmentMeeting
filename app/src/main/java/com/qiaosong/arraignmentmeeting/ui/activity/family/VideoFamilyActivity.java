@@ -1,20 +1,24 @@
 package com.qiaosong.arraignmentmeeting.ui.activity.family;
 
-import android.Manifest;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hst.fsp.FspEngine;
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.bean.MeetingBean;
 import com.qiaosong.arraignmentmeeting.event.EventConstant;
 import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
-import com.qiaosong.arraignmentmeeting.event.bean.JoinGroupEventBean;
 import com.qiaosong.arraignmentmeeting.event.bean.RemoteVideoEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.VideoFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.VideoFamilyPresenter;
 import com.qiaosong.arraignmentmeeting.ui.provider.SurfaceViewOutlineProvider;
+import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PxUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -26,6 +30,17 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
     SurfaceView sv;
     @BindView(R.id.sv_self)
     SurfaceView svSelf;
+    @BindView(R.id.rl_parent)
+    RelativeLayout rlParent;
+    @BindView(R.id.tv_tips)
+    TextView tvTips;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
+
+    boolean isPublish;
+
+    TitleViewHolder titleViewHolder;
+
 
     @Override
     public int getLayoutId() {
@@ -50,6 +65,9 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        titleViewHolder.initVideoView(0, "");
+        rlParent.addView(titleViewHolder.getView());
         svSelf.setZOrderOnTop(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
@@ -78,11 +96,53 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
     }
 
     /**
-     * 开始会见
+     * 开始会见回调
+     *
+     * @param meetingBean
+     * @param restTime
      */
     @Override
-    public void onIsBeginVideo() {
-        FspEngineManager.getInstance().startPublishVideo();
-        FspEngineManager.getInstance().startPublishAudio();
+    public void onIsBeginVideo(MeetingBean meetingBean, String restTime) {
+        titleViewHolder.initVideoView(meetingBean.isWait() ? 0 : meetingBean.isBegin() ? 1 : 2, restTime);
+        if (meetingBean.isBegin()) {//开始会见才会推送流
+            if (!TextUtils.isEmpty(restTime)) {
+                long time = Long.parseLong(restTime);
+                if (time < 11 && time > 0) {
+                    tvCount.setVisibility(View.VISIBLE);
+                    tvCount.setText(time + "");
+                } else {
+                    tvCount.setVisibility(View.GONE);
+                }
+            } else {
+                tvCount.setVisibility(View.GONE);
+            }
+            if (!isPublish) {
+                isPublish = true;
+                FspEngineManager.getInstance().startPublishVideo();
+                FspEngineManager.getInstance().startPublishAudio();
+            }
+        } else {
+            tvCount.setVisibility(View.GONE);
+            if (isPublish) {
+                isPublish = false;
+                FspEngineManager.getInstance().stopPublishVideo();
+                FspEngineManager.getInstance().stopPublishAudio();
+            }
+        }
+
+        if (meetingBean.isWait()) {//等待中出现
+            tvTips.setVisibility(View.VISIBLE);
+        } else {
+            tvTips.setVisibility(View.GONE);
+        }
+
+        if (meetingBean.isEnd()) {
+            tvCount.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    VideoFamilyActivity.this.finish();
+                }
+            }, 1000);
+        }
     }
 }

@@ -11,6 +11,7 @@ import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiMeetBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.http.Api;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
@@ -55,9 +56,9 @@ public class AppSubscribe extends BaseSubscribe {
      *
      * @param mObservable
      */
-    public void requestIsbeginMeetting(MultipartBody params, ApiObserver<BeginMeetBean> mObservable) {
+    public void requestIsbeginMeetting(MultipartBody params, ApiObserver<ApiMeetBean> mObservable) {
         Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
-        Observable<ApiResultBean<BeginMeetBean>> observable = apiService.requestIsbeginMeetting(params);
+        Observable<ApiResultBean<ApiMeetBean>> observable = apiService.requestIsbeginMeetting(params);
         subscribe(observable, mObservable);
     }
 

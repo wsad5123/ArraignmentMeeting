@@ -10,6 +10,7 @@ import com.qiaosong.arraignmentmeeting.bean.ProvinceBean;
 import com.qiaosong.arraignmentmeeting.bean.PrisonBean;
 import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
+import com.qiaosong.arraignmentmeeting.bean.api.ApiMeetBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.baselibrary.bean.ApiResultBean;
 
@@ -33,7 +34,7 @@ public class Api {
 
         //获取是否开始会见
         @POST("seatlock/isbeginMeetting")
-        Observable<ApiResultBean<BeginMeetBean>> requestIsbeginMeetting(@Body MultipartBody body);
+        Observable<ApiResultBean<ApiMeetBean>> requestIsbeginMeetting(@Body MultipartBody body);
 
         //获取所有省份信息
         @POST("area/getallprovince")
