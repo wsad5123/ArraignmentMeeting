@@ -38,10 +38,10 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return instance;
     }
 
-    public int init(Context context) {
+    public int init(Context context, String serverAddr) {
 
         FspEngineConfigure configure = new FspEngineConfigure();
-        configure.serverAddr = "";
+        configure.serverAddr = serverAddr;
         configure.hardwareEncNumber = 1;
         configure.hardwareDecNumber = 0;
         fspEngine = FspEngine.create(context, APP_ID, configure, this);

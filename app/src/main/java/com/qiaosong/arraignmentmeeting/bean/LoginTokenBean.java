@@ -8,6 +8,7 @@ public class LoginTokenBean {
     @SerializedName("useruuid")
     private String userUuid;
     private String token;
+    private String serverAddr;
 
     public String getGroupId() {
         return groupId;
@@ -31,5 +32,13 @@ public class LoginTokenBean {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getServerAddr() {
+        return serverAddr;
+    }
+
+    public void setServerAddr(String serverAddr) {
+        this.serverAddr = serverAddr;
     }
 }
