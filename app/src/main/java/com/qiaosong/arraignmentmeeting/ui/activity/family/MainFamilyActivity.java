@@ -26,6 +26,7 @@ import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainFamilyPresenter;
 import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
+import com.qiaosong.arraignmentmeeting.utils.LogUtils;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 import com.qiaosong.baselibrary.utils.ToastUtils;
 
@@ -143,10 +144,12 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:    //返回键
+                LogUtils.d("back--->");
+                return true;
             case KeyEvent.KEYCODE_ENTER:     //确定键enter
             case KeyEvent.KEYCODE_DPAD_CENTER:
                 btnSure.performClick();
@@ -184,8 +187,6 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             case KeyEvent.KEYCODE_DEL:    //删除
                 removeNum();
                 break;
-            case KeyEvent.KEYCODE_BACK:    //返回键
-                break;   //这里由于break会退出，所以我们自己要处理掉 不返回上一层
             default:
                 break;
         }

@@ -3,6 +3,7 @@ package com.qiaosong.arraignmentmeeting.ui.activity.prisoner;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainPrisonerContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainPrisonerPresenter;
 import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
+import com.qiaosong.arraignmentmeeting.utils.LogUtils;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -143,5 +145,15 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
                 }
             }
         }, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_WIFI_STATE});
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:    //返回键
+                LogUtils.d("back--->");
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

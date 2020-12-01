@@ -19,20 +19,24 @@
         android:usesCleartextTraffic="true"
         tool:ignore="LockedOrientationActivity">
         <activity
-            android:name=".ui.activity.StartActivity"
+            android:name=".ui.activity.family.MainFamilyActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.family.MainFamilyActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".ui.activity.prisoner.MainPrisonerActivity"
-            android:screenOrientation="landscape" />
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".ui.activity.family.VideoFamilyActivity"
             android:screenOrientation="landscape">
