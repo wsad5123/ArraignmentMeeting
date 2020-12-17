@@ -64,11 +64,11 @@ public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
             super.initData(position, obj);
             this.obj = obj;
             if (position == 9) {
-                tvNum.setTextSize(15);
+                tvNum.setTextSize(30);
             } else if (position == 11) {
-                tvNum.setTextSize(25);
+                tvNum.setTextSize(50);
             } else {
-                tvNum.setTextSize(20);
+                tvNum.setTextSize(40);
             }
             tvNum.setText(obj);
         }

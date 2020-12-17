@@ -5,15 +5,15 @@
 
     <TextView
         android:id="@+id/tv_num"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="9dp"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/drawable_key_board"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
 </LinearLayout>

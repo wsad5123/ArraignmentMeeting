@@ -12,25 +12,25 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="400dp"
+            android:layout_width="800dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="117dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginTop="181dp"
+            android:layout_marginRight="50dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:background="@drawable/corners_gray_59_size10"
+                android:layout_height="350dp"
+                android:background="@drawable/corners_gray_59_size20"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="74dp"
                     android:gravity="center"
                     android:text="请输入您的身份证号码"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="30sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -40,25 +40,25 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_card_id"
                     android:layout_width="wrap_content"
-                    android:layout_height="39dp"
+                    android:layout_height="78dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="39dp" />
+                    android:layout_marginTop="84dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:layout_marginTop="36dp"
-                android:background="@drawable/corners_gray_59_size10"
+                android:layout_height="250dp"
+                android:layout_marginTop="71dp"
+                android:background="@drawable/corners_gray_59_size20"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="74dp"
                     android:gravity="center"
                     android:text="操作说明"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="30sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -68,54 +68,54 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginRight="29dp"
                     android:lineSpacingExtra="7dp"
                     android:text="@string/main_desc"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="25sp" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="250dp"
-            android:layout_marginTop="113dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="172dp"
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="250dp"
-                android:layout_height="275dp"
-                android:background="@drawable/corners_gray_59_size10">
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:background="@drawable/corners_gray_59_size20">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_key_board"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp" />
 
             </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_sure"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="25dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/corners_red_fe"
                 android:text="确定"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
     <View
         android:id="@+id/v_setting"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="35dp"

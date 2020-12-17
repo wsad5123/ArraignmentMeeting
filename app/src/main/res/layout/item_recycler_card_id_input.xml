@@ -2,20 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="5dp">
+    android:paddingLeft="10dp">
 
     <TextView
         android:id="@+id/tv_num"
-        android:layout_width="15dp"
-        android:layout_height="33dp"
+        android:layout_width="30dp"
+        android:layout_height="66dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="25sp" />
+        android:textSize="50sp" />
 
     <View
         android:id="@+id/v_line"
         android:layout_width="wrap_content"
-        android:layout_height="3dp"
+        android:layout_height="6dp"
         android:layout_below="@id/tv_num"
         android:layout_alignLeft="@id/tv_num"
         android:layout_alignRight="@id/tv_num"
