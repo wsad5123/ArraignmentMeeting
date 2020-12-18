@@ -44,14 +44,14 @@ public class PhoneUtils {
     private static final String fileAddressMac = "/sys/class/net/wlan0/address";
 
     public static String getAdresseMAC(Context context) {
-        WifiManager wifiMan = (WifiManager)context.getSystemService(Context.WIFI_SERVICE) ;
+        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
 
-        if(wifiInf !=null && marshmallowMacAddress.equals(wifiInf.getMacAddress())){
+        if (wifiInf != null && marshmallowMacAddress.equals(wifiInf.getMacAddress())) {
             String result = null;
             try {
-                result= getAdressMacByInterface();
-                if (result != null){
+                result = getAdressMacByInterface();
+                if (result != null) {
                     return result;
                 } else {
                     result = getAddressMacByFile(wifiMan);
@@ -62,7 +62,7 @@ public class PhoneUtils {
             } catch (Exception e) {
                 LogUtils.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
             }
-        } else{
+        } else {
             if (wifiInf != null && wifiInf.getMacAddress() != null) {
                 return wifiInf.getMacAddress();
             } else {
@@ -72,7 +72,7 @@ public class PhoneUtils {
         return marshmallowMacAddress;
     }
 
-    private static String getAdressMacByInterface(){
+    private static String getAdressMacByInterface() {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface nif : all) {
@@ -84,7 +84,7 @@ public class PhoneUtils {
 
                     StringBuilder res1 = new StringBuilder();
                     for (byte b : macBytes) {
-                        res1.append(String.format("%02X:",b));
+                        res1.append(String.format("%02X:", b));
                     }
 
                     if (res1.length() > 0) {
@@ -196,32 +196,60 @@ public class PhoneUtils {
      * @return
      */
     public static String getIPAddress(Context context) {
-        NetworkInfo info = ((ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if (info != null && info.isConnected()) {
-            if (info.getType() == ConnectivityManager.TYPE_MOBILE) {    // 当前使用2G/3G/4G网络
-                try {
-                    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                        NetworkInterface intf = en.nextElement();
-                        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                            InetAddress inetAddress = enumIpAddr.nextElement();
-                            if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                                return inetAddress.getHostAddress();
-                            }
-                        }
-                    }
-                } catch (SocketException e) {
-                    e.printStackTrace();
-                }
+        if (context == null) {
+            return "";
+        }
 
-            } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {    // 当前使用无线网络
-                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());    // 得到IPV4地址
-                return ipAddress;
+        ConnectivityManager conManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        try {
+            NetworkInfo info = conManager.getActiveNetworkInfo();
+            if (info != null && info.isConnected()) {
+                // 3/4g网络
+                if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                    return getHostIp();
+                } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+                    return getLocalIPAddress(context); // 局域网地址
+//                    return getOutNetIP(); // 外网地址
+                } else if (info.getType() == ConnectivityManager.TYPE_ETHERNET) {
+                    // 以太网有限网络
+                    return getHostIp();
+                }
             }
-        } else {
-            // 当前无网络连接,请在设置中打开网络
+        } catch (Exception e) {
+            return "";
+        }
+        return "";
+    }
+
+    // 获取有限网IP
+    public static String getHostIp() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf
+                        .getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()
+                            && inetAddress instanceof Inet4Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        return "0.0.0.0";
+    }
+
+    // wifi下获取本地网络IP地址（局域网地址）
+    public static String getLocalIPAddress(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager != null) {
+            @SuppressLint("MissingPermission") WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());
+            return ipAddress;
         }
         return "";
     }
