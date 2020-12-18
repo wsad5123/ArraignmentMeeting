@@ -22,12 +22,6 @@
             android:name=".ui.activity.family.MainFamilyActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
-
-        </activity>
-        <activity
-            android:name=".ui.activity.prisoner.MainPrisonerActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,6 +30,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.prisoner.MainPrisonerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+
         </activity>
         <activity
             android:name=".ui.activity.family.VideoFamilyActivity"

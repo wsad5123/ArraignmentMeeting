@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="147dp"
-        android:layout_marginTop="79dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="388dp"
+        android:layout_marginTop="160dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -18,80 +18,80 @@
             android:layout_height="wrap_content"
             android:text="服务器IP"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/et_ip"
-            android:layout_width="200dp"
+            android:layout_width="400dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="13dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="26dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="33dp"
+            android:paddingLeft="66dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="88dp"
+            android:layout_marginLeft="176dp"
             android:text="端口号"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/et_port"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="13dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="26dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="33dp"
+            android:paddingLeft="66dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="147dp"
+        android:layout_marginTop="294dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_service_ip"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
             android:background="@drawable/corners_green_07"
             android:gravity="center"
             android:text="连接服务器"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_location_ip"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="110dp"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="220dp"
             android:background="@drawable/corners_blue_00"
             android:gravity="center"
             android:text="设置本地设备IP"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginLeft="226dp"
-        android:layout_marginTop="275dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="452dp"
+        android:layout_marginTop="490dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -100,60 +100,60 @@
             android:layout_height="wrap_content"
             android:text="*"
             android:textColor="#F9413E"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="省份"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_province"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="30dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="26sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="300dp"
             android:text="*"
             android:textColor="#F9413E"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="城市"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_city"
-            android:layout_width="100dp"
+            android:layout_width="400dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="30dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="26sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginLeft="196dp"
-        android:layout_marginTop="323dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="392dp"
+        android:layout_marginTop="586dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -162,33 +162,33 @@
             android:layout_height="wrap_content"
             android:text="*"
             android:textColor="#F9413E"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="机构类型"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_type"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="30dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="26sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginLeft="196dp"
-        android:layout_marginTop="370dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="392dp"
+        android:layout_marginTop="680dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -197,33 +197,33 @@
             android:layout_height="wrap_content"
             android:text="*"
             android:textColor="#F9413E"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="单位名称"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="30dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="26sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginLeft="196dp"
-        android:layout_marginTop="418dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="392dp"
+        android:layout_marginTop="776dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -232,38 +232,38 @@
             android:layout_height="wrap_content"
             android:text="*"
             android:textColor="#F9413E"
-            android:textSize="10sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设备名称"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/et_device_name"
-            android:layout_width="275dp"
+            android:layout_width="550dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_white_5"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/corners_white_10"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="30dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="26sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="108dp"
         android:background="@drawable/corners_red_fe"
         android:text="保存"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 </RelativeLayout>

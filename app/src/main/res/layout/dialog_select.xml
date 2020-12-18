@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="800dp"
+        android:layout_height="800dp"
         android:background="@color/white">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_content"
-            android:layout_width="300dp"
+            android:layout_width="600dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
