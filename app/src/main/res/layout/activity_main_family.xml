@@ -8,27 +8,27 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_marginLeft="260dp"
-        android:layout_marginTop="290dp"
+        android:layout_height="33dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="145dp"
         android:gravity="center_vertical"
         android:text="请输入4位数会见码："
         android:textColor="#FFE200"
-        android:textSize="50sp" />
+        android:textSize="25sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="250dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rl_one"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/corners_gray_97_size10">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/corners_gray_97_size5">
 
             <TextView
                 android:id="@+id/tv_one"
@@ -38,26 +38,26 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textColor="@color/white"
-                android:textSize="100sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/v_one"
-                android:layout_width="120dp"
-                android:layout_height="8dp"
+                android:layout_width="60dp"
+                android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="28dp"
+                android:layout_marginBottom="14dp"
                 android:background="@color/white" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_two"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/corners_gray_97_size10">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/corners_gray_97_size5">
 
             <TextView
                 android:id="@+id/tv_two"
@@ -67,27 +67,27 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textColor="@color/white"
-                android:textSize="100sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/v_two"
-                android:layout_width="120dp"
-                android:layout_height="8dp"
+                android:layout_width="60dp"
+                android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
-                android:visibility="gone"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="28dp"
-                android:background="@color/white" />
+                android:layout_marginBottom="14dp"
+                android:background="@color/white"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_three"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/corners_gray_97_size10">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/corners_gray_97_size5">
 
             <TextView
                 android:id="@+id/tv_three"
@@ -97,27 +97,27 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textColor="@color/white"
-                android:textSize="100sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/v_three"
-                android:layout_width="120dp"
-                android:layout_height="8dp"
+                android:layout_width="60dp"
+                android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="28dp"
-                android:visibility="gone"
-                android:background="@color/white" />
+                android:layout_marginBottom="14dp"
+                android:background="@color/white"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_four"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/corners_gray_97_size10">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/corners_gray_97_size5">
 
             <TextView
                 android:id="@+id/tv_four"
@@ -127,43 +127,63 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textColor="@color/white"
-                android:textSize="100sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/v_four"
-                android:layout_width="120dp"
-                android:layout_height="8dp"
+                android:layout_width="60dp"
+                android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="28dp"
+                android:layout_marginBottom="14dp"
                 android:background="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </RelativeLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_sure"
-        android:layout_width="480dp"
+    <RelativeLayout
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:imeOptions="actionSearch"
+            android:inputType="number"
+            android:maxLength="4" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_sure"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/corners_red_fe"
         android:text="确定"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <View
         android:id="@+id/v_setting"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="88dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="30dp"
         android:background="@mipmap/ic_main_setting" />
 
 </RelativeLayout>

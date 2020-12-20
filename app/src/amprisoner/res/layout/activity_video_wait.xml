@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="78dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="219dp"
+        android:gravity="center_vertical"
+        android:text="视频连接中，请稍后......"
+        android:textColor="#FFE200"
+        android:textSize="60sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@mipmap/ic_camare_white" />
+
+        <View
+            android:layout_width="540dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp"
+            android:background="@mipmap/ic_camare_wait" />
+
+        <View
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@mipmap/ic_camare_gray" />
+
+    </LinearLayout>
+
+</RelativeLayout>

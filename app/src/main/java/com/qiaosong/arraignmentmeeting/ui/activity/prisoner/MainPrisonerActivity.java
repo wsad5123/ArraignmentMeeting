@@ -140,7 +140,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
         PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) {
-                if (FspEngineManager.getInstance().init(AppApplication.getInstance(), bean.getServerAddr()) == FspEngine.ERR_OK) {
+                if (FspEngineManager.getInstance().init(AppApplication.getInstance(), bean.getServerAddr(), bean.getAppid(), bean.getAppsecretkey()) == FspEngine.ERR_OK) {
                     FspEngineManager.getInstance().login(bean.getUserUuid(), FspEngineManager.getInstance().getToken(bean.getUserUuid()));//bean.getToken());
                 }
             }

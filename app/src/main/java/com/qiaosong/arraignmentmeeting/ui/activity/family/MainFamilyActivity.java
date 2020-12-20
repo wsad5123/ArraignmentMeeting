@@ -4,10 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,12 +21,12 @@ import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.event.bean.LoginResultEventBean;
 import com.qiaosong.arraignmentmeeting.fsp.FspEngineManager;
 import com.qiaosong.arraignmentmeeting.ui.activity.AdminPasswordActivity;
-import com.qiaosong.arraignmentmeeting.ui.activity.SettingActivity;
 import com.qiaosong.arraignmentmeeting.ui.activity.VideoWaitActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.MainFamilyContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.MainFamilyPresenter;
 import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
+import com.qiaosong.arraignmentmeeting.utils.InputManagerUtils;
 import com.qiaosong.arraignmentmeeting.utils.LogUtils;
 import com.qiaosong.baselibrary.utils.PermissionsUtils;
 import com.qiaosong.baselibrary.utils.ToastUtils;
@@ -34,6 +35,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 import io.reactivex.functions.Consumer;
 
 public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implements MainFamilyContacts.IMainFamilyView {
@@ -67,14 +70,13 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
     View vSetting;
     @BindView(R.id.rl_parent)
     RelativeLayout rlParent;
-
-    StringBuffer stringBuffer = new StringBuffer();
+    @BindView(R.id.et_code)
+    EditText etCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
-        initCode();
     }
 
     @Override
@@ -104,15 +106,77 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
                 startActivity(new Intent(mContext, AdminPasswordActivity.class));
                 break;
             case R.id.btn_sure:
-                if (stringBuffer.length() == 4) {
-                    mvpPresenter.getToken(stringBuffer.toString());
+                if (etCode.getText().length() == 4) {
+                    mvpPresenter.getToken(etCode.getText().toString());
                 } else {
                     ToastUtils.show(mContext, "请输入4位会见码");
                 }
-//                Todo
-//                mvpPresenter.getToken("9075");
+                break;
+            case R.id.tv_one:
+            case R.id.tv_two:
+            case R.id.tv_three:
+            case R.id.tv_four:
+                InputManagerUtils.showInput(this, etCode);
                 break;
         }
+    }
+
+    @OnTextChanged(R.id.et_code)
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        tvOne.setText("");
+        tvTwo.setText("");
+        tvThree.setText("");
+        tvFour.setText("");
+        vFour.setVisibility(View.GONE);
+        vThree.setVisibility(View.GONE);
+        vTwo.setVisibility(View.GONE);
+        vOne.setVisibility(View.GONE);
+        int length = s.length();
+        switch (length) {
+            case 4:
+                tvFour.setText(s.subSequence(3, 4));
+            case 3:
+                tvThree.setText(s.subSequence(2, 3));
+            case 2:
+                tvTwo.setText(s.subSequence(1, 2));
+            case 1:
+                tvOne.setText(s.subSequence(0, 1));
+                break;
+        }
+        switch (length) {
+            case 3:
+                vFour.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                vThree.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                vTwo.setVisibility(View.VISIBLE);
+                break;
+            case 0:
+                vOne.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    /**
+     * 搜索按钮触发回调
+     *
+     * @param v
+     * @param actionId
+     * @param event
+     * @return
+     */
+    @OnEditorAction(R.id.et_code)
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (etCode.getText().length() == 4) {
+                mvpPresenter.getToken(etCode.getText().toString());
+            } else {
+                ToastUtils.show(mContext, "请输入4位会见码");
+            }
+        }
+        return false;
     }
 
     @Subscribe
@@ -137,7 +201,7 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         PermissionsUtils.requestPermissions((BaseActivity) mContext, new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) {
-                if (FspEngineManager.getInstance().init(AppApplication.getInstance(), bean.getServerAddr()) == FspEngine.ERR_OK) {
+                if (FspEngineManager.getInstance().init(AppApplication.getInstance(), bean.getServerAddr(), bean.getAppid(), bean.getAppsecretkey()) == FspEngine.ERR_OK) {
                     FspEngineManager.getInstance().login(bean.getUserUuid(), FspEngineManager.getInstance().getToken(bean.getUserUuid()));//bean.getToken());
                 }
             }
@@ -154,39 +218,6 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             case KeyEvent.KEYCODE_DPAD_CENTER:
                 btnSure.performClick();
                 break;
-            case KeyEvent.KEYCODE_0:
-                inputNum("0");
-                break;
-            case KeyEvent.KEYCODE_1:
-                inputNum("1");
-                break;
-            case KeyEvent.KEYCODE_2:
-                inputNum("2");
-                break;
-            case KeyEvent.KEYCODE_3:
-                inputNum("3");
-                break;
-            case KeyEvent.KEYCODE_4:
-                inputNum("4");
-                break;
-            case KeyEvent.KEYCODE_5:
-                inputNum("5");
-                break;
-            case KeyEvent.KEYCODE_6:
-                inputNum("6");
-                break;
-            case KeyEvent.KEYCODE_7:
-                inputNum("7");
-                break;
-            case KeyEvent.KEYCODE_8:
-                inputNum("8");
-                break;
-            case KeyEvent.KEYCODE_9:
-                inputNum("9");
-                break;
-            case KeyEvent.KEYCODE_DEL:    //删除
-                removeNum();
-                break;
             default:
                 break;
         }
@@ -194,50 +225,5 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
 
     }
 
-    private void initCode() {
-        vFour.setVisibility(View.GONE);
-        vThree.setVisibility(View.GONE);
-        vTwo.setVisibility(View.GONE);
-        vOne.setVisibility(View.GONE);
-        if (stringBuffer.length() == 3) {
-            vFour.setVisibility(View.VISIBLE);
-        } else if (stringBuffer.length() == 2) {
-            vThree.setVisibility(View.VISIBLE);
-        } else if (stringBuffer.length() == 1) {
-            vTwo.setVisibility(View.VISIBLE);
-        } else if (stringBuffer.length() == 0) {
-            vOne.setVisibility(View.VISIBLE);
-        }
-        tvOne.setText("");
-        tvTwo.setText("");
-        tvThree.setText("");
-        tvFour.setText("");
-        for (int i = 0; i < stringBuffer.length(); i++) {
-            if (i == 0) {
-                tvOne.setText(stringBuffer.toString().substring(0, 1));
-            } else if (i == 1) {
-                tvTwo.setText(stringBuffer.toString().substring(1, 2));
-            } else if (i == 2) {
-                tvThree.setText(stringBuffer.toString().substring(2, 3));
-            } else if (i == 3) {
-                tvFour.setText(stringBuffer.toString().substring(3, 4));
-            }
-        }
-    }
-
-
-    public void inputNum(String num) {
-        if (!TextUtils.isEmpty(num) && stringBuffer.length() < 4) {
-            stringBuffer.append(num);
-        }
-        initCode();
-    }
-
-    public void removeNum() {
-        if (stringBuffer.length() > 1) {
-            stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-        }
-        initCode();
-    }
 
 }

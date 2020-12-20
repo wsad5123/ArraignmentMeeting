@@ -13,8 +13,8 @@
 
     <SurfaceView
         android:id="@+id/sv_self"
-        android:layout_width="450dp"
-        android:layout_height="300dp"
+        android:layout_width="225dp"
+        android:layout_height="150dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:background="@color/bg_color" />
@@ -24,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="25dp"
         android:text="您已成功进入聊天室，请做好会见准备......"
         android:textColor="#FFE200"
-        android:textSize="60sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/tv_count"
@@ -36,7 +36,7 @@
         android:layout_centerInParent="true"
         android:text="10"
         android:textColor="@color/white_40"
-        android:textSize="200sp"
+        android:textSize="100sp"
         android:visibility="gone" />
 
 </RelativeLayout>

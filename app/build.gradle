@@ -99,5 +99,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
 
     //好视通sdk
-    implementation(name: "fsp_sdk", ext: "aar")
+    implementation(name: "fsp_sdk-3.1.0", ext: "aar")
 }

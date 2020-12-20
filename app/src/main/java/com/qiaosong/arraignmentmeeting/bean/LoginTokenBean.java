@@ -9,6 +9,8 @@ public class LoginTokenBean {
     private String userUuid;
     private String token;
     private String serverAddr;
+    private String appsecretkey;
+    private String appid;
 
     public String getGroupId() {
         return groupId;
@@ -40,5 +42,21 @@ public class LoginTokenBean {
 
     public void setServerAddr(String serverAddr) {
         this.serverAddr = serverAddr;
+    }
+
+    public String getAppsecretkey() {
+        return appsecretkey;
+    }
+
+    public void setAppsecretkey(String appsecretkey) {
+        this.appsecretkey = appsecretkey;
+    }
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 }

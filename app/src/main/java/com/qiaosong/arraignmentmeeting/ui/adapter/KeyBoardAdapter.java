@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qiaosong.arraignmentmeeting.BuildConfig;
 import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.arraignmentmeeting.ui.adapter.base.BaseRecyclerAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseViewHolder;
@@ -63,12 +64,22 @@ public class KeyBoardAdapter extends BaseRecyclerAdapter<String> {
         public void initData(int position, String obj) {
             super.initData(position, obj);
             this.obj = obj;
-            if (position == 9) {
-                tvNum.setTextSize(30);
-            } else if (position == 11) {
-                tvNum.setTextSize(50);
+            if (BuildConfig.APPLICATION_ID.equals("com.qiaosong.arraignmentmeeting.family")) {
+                if (position == 9) {
+                    tvNum.setTextSize(15);
+                } else if (position == 11) {
+                    tvNum.setTextSize(25);
+                } else {
+                    tvNum.setTextSize(20);
+                }
             } else {
-                tvNum.setTextSize(40);
+                if (position == 9) {
+                    tvNum.setTextSize(30);
+                } else if (position == 11) {
+                    tvNum.setTextSize(50);
+                } else {
+                    tvNum.setTextSize(40);
+                }
             }
             tvNum.setText(obj);
         }

@@ -19,8 +19,8 @@ import org.greenrobot.eventbus.EventBus;
 
 public class FspEngineManager implements IFspEngineEventHandler {
     private static volatile FspEngineManager instance = null;
-    private static final String APP_ID = "7fb488ff2eb5887cc615c183a1e61097";
-    private static final String APP_SECRETKEY = "25422ccb1bed9cca";
+    private static String APP_ID = "";
+    private static String APP_SECRETKEY = "";
     private static FspEngine fspEngine;
 
     private FspEngineManager() {
@@ -38,8 +38,9 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return instance;
     }
 
-    public int init(Context context, String serverAddr) {
-
+    public int init(Context context, String serverAddr, String appid, String appsecretkey) {
+        APP_ID = appid;
+        APP_SECRETKEY = appsecretkey;
         FspEngineConfigure configure = new FspEngineConfigure();
         configure.serverAddr = serverAddr;
         configure.hardwareEncNumber = 1;
@@ -51,7 +52,7 @@ public class FspEngineManager implements IFspEngineEventHandler {
     }
 
     public int login(String userId, String token) {
-        return fspEngine.login(token, userId);
+        return fspEngine.login(token, userId, true, userId);
     }
 
     public int joinGroup(String groupId) {
@@ -116,8 +117,8 @@ public class FspEngineManager implements IFspEngineEventHandler {
     }
 
     @Override
-    public void onFspEvent(int i) {
-        LogUtils.d("zxy", "onFspEvent:" + i);
+    public void onFspEvent(int i, int i1) {
+        LogUtils.d("zxy", "onFspEvent:" + i + "," + i1);
     }
 
     @Override
@@ -127,9 +128,10 @@ public class FspEngineManager implements IFspEngineEventHandler {
     }
 
     @Override
-    public void onRemoteAudioEvent(String s, int i) {
-        LogUtils.d("zxy", "onRemoteAudioEvent:" + s + "," + i);
+    public void onRemoteAudioEvent(String s, String s1, int i) {
+        LogUtils.d("zxy", "onRemoteAudioEvent:" + s + "," + s1 + "," + i);
     }
+
 
     @Override
     public void onGroupUsersRefreshed(String[] strings) {
