@@ -1,5 +1,6 @@
 package com.qiaosong.arraignmentmeeting.ui.activity.family;
 
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.SurfaceView;
@@ -68,7 +69,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         titleViewHolder = new TitleViewHolder(mContext, rlParent);
         titleViewHolder.initVideoView(0, "");
         rlParent.addView(titleViewHolder.getView());
-        svSelf.setZOrderOnTop(true);
+        svSelf.setZOrderMediaOverlay(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
