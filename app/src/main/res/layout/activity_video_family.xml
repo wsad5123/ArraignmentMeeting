@@ -18,6 +18,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true" />
 
+
     <TextView
         android:id="@+id/tv_tips"
         android:layout_width="wrap_content"

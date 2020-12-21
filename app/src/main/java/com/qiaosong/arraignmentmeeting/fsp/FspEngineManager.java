@@ -17,15 +17,21 @@ import com.qiaosong.arraignmentmeeting.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FspEngineManager implements IFspEngineEventHandler {
     private static volatile FspEngineManager instance = null;
     private static String APP_ID = "";
     private static String APP_SECRETKEY = "";
     private static FspEngine fspEngine;
     private boolean isInit;
+    private boolean isNeedSaveVideoInfo;
+    private List<RemoteVideoEventBean> userVideoList;
+
 
     private FspEngineManager() {
-
+        userVideoList = new ArrayList<>();
     }
 
     public static FspEngineManager getInstance() {
@@ -63,9 +69,14 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return fspEngine.joinGroup(groupId);
     }
 
-    public void startPreviewVideo(SurfaceView surfaceView) {
-        fspEngine.startPreviewVideo(surfaceView);
+    public int startPreviewVideo(SurfaceView surfaceView) {
+        return fspEngine.startPreviewVideo(surfaceView);
     }
+
+    public int stopPreviewVideo() {
+        return fspEngine.stopPreviewVideo();
+    }
+
 
     public void setRemoteVideoRender(String userId, String videoId, SurfaceView renderView, int renderMode) {
         fspEngine.setRemoteVideoRender(userId, videoId, renderView, renderMode);
@@ -116,6 +127,10 @@ public class FspEngineManager implements IFspEngineEventHandler {
     @Override
     public void onJoinGroupResult(int result) {
         LogUtils.d("zxy", "onJoinGroupResult:" + result);
+        if (result == FspEngine.ERR_OK) {
+            userVideoList.clear();
+            setNeedSaveVideoInfo(true);
+        }
         EventBus.getDefault().post(new TagValueEvent(EventConstant.JOIN_GROUP_EVENT, new JoinGroupEventBean(result)));
 
     }
@@ -133,7 +148,11 @@ public class FspEngineManager implements IFspEngineEventHandler {
     @Override
     public void onRemoteVideoEvent(String userId, String videoId, int eventType) {
         LogUtils.d("zxy", "onRemoteVideoEvent:" + userId + "," + videoId + "," + eventType);
-        EventBus.getDefault().post(new TagValueEvent(EventConstant.REMOTE_VIDEO_EVENT, new RemoteVideoEventBean(userId, videoId, eventType)));
+        if (isNeedSaveVideoInfo()) {
+            userVideoList.add(new RemoteVideoEventBean(userId, videoId, eventType));
+        } else {
+            EventBus.getDefault().post(new TagValueEvent(EventConstant.REMOTE_VIDEO_EVENT, new RemoteVideoEventBean(userId, videoId, eventType)));
+        }
     }
 
     @Override
@@ -150,5 +169,21 @@ public class FspEngineManager implements IFspEngineEventHandler {
     @Override
     public void onRemoteUserEvent(String s, int i) {
         LogUtils.d("zxy", "onRemoteUserEvent:" + s + "," + i);
+    }
+
+    public boolean isNeedSaveVideoInfo() {
+        return isNeedSaveVideoInfo;
+    }
+
+    public List<RemoteVideoEventBean> getUserVideoList() {
+        return userVideoList;
+    }
+
+    public void setUserVideoList(List<RemoteVideoEventBean> userVideoList) {
+        this.userVideoList = userVideoList;
+    }
+
+    public void setNeedSaveVideoInfo(boolean needSaveVideoInfo) {
+        isNeedSaveVideoInfo = needSaveVideoInfo;
     }
 }

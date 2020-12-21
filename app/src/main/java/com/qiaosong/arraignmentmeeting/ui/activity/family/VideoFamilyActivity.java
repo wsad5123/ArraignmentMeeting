@@ -1,6 +1,5 @@
 package com.qiaosong.arraignmentmeeting.ui.activity.family;
 
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.SurfaceView;
@@ -23,6 +22,8 @@ import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.PxUtils;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -69,16 +70,24 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         titleViewHolder = new TitleViewHolder(mContext, rlParent);
         titleViewHolder.initVideoView(0, "");
         rlParent.addView(titleViewHolder.getView());
+        mvpPresenter.getIsBeginMeeting();
+
         svSelf.setZOrderMediaOverlay(true);
         svSelf.setOutlineProvider(new SurfaceViewOutlineProvider(PxUtils.dip2px(5)));
         svSelf.setClipToOutline(true);
         FspEngineManager.getInstance().startPreviewVideo(svSelf);
-        mvpPresenter.getIsBeginMeeting();
+
+        FspEngineManager.getInstance().setNeedSaveVideoInfo(false);
+        List<RemoteVideoEventBean> data = FspEngineManager.getInstance().getUserVideoList();
+        for (RemoteVideoEventBean item : data)
+            initRemoteVideoEvent(item);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        FspEngineManager.getInstance().stopPreviewVideo();
         FspEngineManager.getInstance().logout();
     }
 
@@ -87,12 +96,19 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
         if (EventConstant.REMOTE_VIDEO_EVENT.equals(event.getTag())) {
             if (event.getValue() instanceof RemoteVideoEventBean) {
                 RemoteVideoEventBean bean = (RemoteVideoEventBean) event.getValue();
-                if (bean.getEventType() == FspEngine.REMOTE_VIDEO_PUBLISH_STARTED) {
-                    FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), sv, FspEngine.RENDER_MODE_SCALE_FILL);
-                } else if (bean.getEventType() == FspEngine.REMOTE_VIDEO_PUBLISH_STOPED) {
-                    FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), null, FspEngine.RENDER_MODE_SCALE_FILL);
-                }
+                initRemoteVideoEvent(bean);
             }
+        }
+    }
+
+    /**
+     * 处理视频推送广播
+     */
+    private void initRemoteVideoEvent(RemoteVideoEventBean bean) {
+        if (bean.getEventType() == FspEngine.REMOTE_VIDEO_PUBLISH_STARTED) {
+            FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), sv, FspEngine.RENDER_MODE_SCALE_FILL);
+        } else if (bean.getEventType() == FspEngine.REMOTE_VIDEO_PUBLISH_STOPED) {
+            FspEngineManager.getInstance().setRemoteVideoRender(bean.getUserId(), bean.getVideoId(), null, FspEngine.RENDER_MODE_SCALE_FILL);
         }
     }
 
