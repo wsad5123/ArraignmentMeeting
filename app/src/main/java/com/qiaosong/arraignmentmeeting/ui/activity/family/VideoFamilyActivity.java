@@ -153,11 +153,11 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
             tvTips.setVisibility(View.GONE);
         }
 
-        if (meetingBean.isEnd()) {
+        if (meetingBean.isEnd() || "0".equals(restTime)) {
             tvCount.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    VideoFamilyActivity.this.finish();
+                    mvpPresenter.finishMeeting();
                 }
             }, 1000);
         }

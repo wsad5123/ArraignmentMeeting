@@ -13,10 +13,14 @@ public class VideoFamilyContacts {
 
     public interface IVideoFamilyPresenter extends IPresenter {
         void getIsBeginMeeting();
+
+        void finishMeeting();
     }
 
     public interface IVideoFamilyModel {
         void getHttpIsBeginMeeting(MvpDataCallBack<ApiMeetBean> callBack);
+
+        void httpFinishMeeting(MvpDataCallBack<Boolean> callBack);
 
         String getRestTime();
 

@@ -62,6 +62,16 @@ public class AppSubscribe extends BaseSubscribe {
         subscribe(observable, mObservable);
     }
 
+    /**
+     * 结束会见
+     *
+     * @param mObservable
+     */
+    public void requestEndMeeting(MultipartBody params, ApiObserver<Object> mObservable) {
+        Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
+        Observable<ApiResultBean<Object>> observable = apiService.requestEndMeeting(params);
+        subscribe(observable, mObservable);
+    }
 
     /**
      * 获取所有省份信息

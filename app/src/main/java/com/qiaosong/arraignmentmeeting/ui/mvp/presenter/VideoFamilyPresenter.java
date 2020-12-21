@@ -63,4 +63,20 @@ public class VideoFamilyPresenter extends BasePresenter<VideoFamilyActivity> imp
             });
         }
     }
+
+    /**
+     * 结束会见
+     */
+    @Override
+    public void finishMeeting() {
+        if (isViewAttach()) {
+            mModel.httpFinishMeeting(new MvpDataCallBack<Boolean>() {
+                @Override
+                public void onData(Boolean data) {
+                    if (data)
+                        mvpReference.get().finish();
+                }
+            });
+        }
+    }
 }

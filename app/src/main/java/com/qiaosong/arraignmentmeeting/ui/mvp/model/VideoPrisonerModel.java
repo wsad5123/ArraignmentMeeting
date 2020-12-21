@@ -52,6 +52,27 @@ public class VideoPrisonerModel extends BaseModel implements VideoPrisonerContac
         });
     }
 
+    /**
+     * 结束
+     *
+     * @param callBack
+     */
+    @Override
+    public void httpFinishMeeting(MvpDataCallBack<Boolean> callBack) {
+        MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
+        builder.addFormDataPart("meettingCode", AppCacheManager.getInstance().getLoginTokenBean().getGroupId());
+        new AppSubscribe(mContext).requestEndMeeting(builder.build(), new ApiObserver<Object>(mContext) {
+            @Override
+            public void onSuccess(Object data) {
+                callBack.onData(true);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
     @Override
     public String getRestTime() {
         return restTime;

@@ -141,11 +141,11 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
         } else {
             tvTips.setVisibility(View.GONE);
         }
-        if (meetingBean.isEnd()) {
+        if (meetingBean.isEnd() || "0".equals(restTime)) {
             tvCount.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    VideoPrisonerActivity.this.finish();
+                    mvpPresenter.finishMeeting();
                 }
             }, 1000);
         }

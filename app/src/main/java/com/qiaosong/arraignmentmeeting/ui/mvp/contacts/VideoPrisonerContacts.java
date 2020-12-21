@@ -15,10 +15,13 @@ public class VideoPrisonerContacts {
     public interface IVideoPrisonerPresenter extends IPresenter {
         void getIsBeginMeeting();
 
+        void finishMeeting();
     }
 
     public interface IVideoPrisonerModel {
         void getHttpIsBeginMeeting(MvpDataCallBack<ApiMeetBean> callBack);
+
+        void httpFinishMeeting(MvpDataCallBack<Boolean> callBack);
 
         String getRestTime();
 

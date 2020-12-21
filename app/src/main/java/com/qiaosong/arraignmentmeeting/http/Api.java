@@ -36,6 +36,10 @@ public class Api {
         @POST("seatlock/isbeginMeetting")
         Observable<ApiResultBean<ApiMeetBean>> requestIsbeginMeetting(@Body MultipartBody body);
 
+        //获取是否开始会见
+        @POST("webManager/endMeetting")
+        Observable<ApiResultBean<Object>> requestEndMeeting(@Body MultipartBody body);
+
         //获取所有省份信息
         @POST("area/getallprovince")
         Observable<ApiResultBean<List<ProvinceBean>>> requestAllProvince(@Body MultipartBody body);
