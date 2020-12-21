@@ -22,8 +22,8 @@ import java.util.List;
 
 public class FspEngineManager implements IFspEngineEventHandler {
     private static volatile FspEngineManager instance = null;
-    private static String APP_ID = "";
-    private static String APP_SECRETKEY = "";
+    private static String APP_ID = "";//""925aa51ebf829d49fc98b2fca5d963bc";
+    private static String APP_SECRETKEY = "";// "d52be60bb810d17e";
     private static FspEngine fspEngine;
     private boolean isInit;
     private boolean isNeedSaveVideoInfo;
