@@ -22,6 +22,7 @@ public class FspEngineManager implements IFspEngineEventHandler {
     private static String APP_ID = "";
     private static String APP_SECRETKEY = "";
     private static FspEngine fspEngine;
+    private boolean isInit;
 
     private FspEngineManager() {
 
@@ -38,7 +39,9 @@ public class FspEngineManager implements IFspEngineEventHandler {
         return instance;
     }
 
-    public int init(Context context, String serverAddr, String appid, String appsecretkey) {
+    public boolean init(Context context, String serverAddr, String appid, String appsecretkey) {
+        if (isInit)
+            return true;
         APP_ID = appid;
         APP_SECRETKEY = appsecretkey;
         FspEngineConfigure configure = new FspEngineConfigure();
@@ -46,9 +49,10 @@ public class FspEngineManager implements IFspEngineEventHandler {
         configure.hardwareEncNumber = 1;
         configure.hardwareDecNumber = 0;
         fspEngine = FspEngine.create(context, APP_ID, configure, this);
+        isInit = fspEngine.init() == FspEngine.ERR_OK;
 //        VideoProfile profile = new VideoProfile(1920, 1080, 15);
 //        fspEngine.setVideoProfile(profile);
-        return fspEngine.init();
+        return isInit;
     }
 
     public int login(String userId, String token) {
@@ -83,10 +87,15 @@ public class FspEngineManager implements IFspEngineEventHandler {
         fspEngine.stopPublishAudio();
     }
 
+    public int logout() {
+        return fspEngine.loginOut();
+    }
+
     public void onDestroy() {
         if (fspEngine != null)
             fspEngine.destroy();
         fspEngine = null;
+        isInit = false;
     }
 
     public String getToken(String userId) {

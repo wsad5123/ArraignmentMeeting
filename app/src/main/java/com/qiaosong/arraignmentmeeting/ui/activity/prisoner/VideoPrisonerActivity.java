@@ -78,7 +78,7 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FspEngineManager.getInstance().onDestroy();
+        FspEngineManager.getInstance().logout();
     }
 
 

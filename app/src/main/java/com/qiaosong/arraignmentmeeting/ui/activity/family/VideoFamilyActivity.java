@@ -79,7 +79,7 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FspEngineManager.getInstance().onDestroy();
+        FspEngineManager.getInstance().logout();
     }
 
     @Subscribe
