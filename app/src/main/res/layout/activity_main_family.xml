@@ -24,144 +24,66 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/rl_one"
+
+        <TextView
+            android:id="@+id/tv_one"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/corners_gray_97_size5">
-
-            <TextView
-                android:id="@+id/tv_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/v_one"
-                android:layout_width="60dp"
-                android:layout_height="4dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="14dp"
-                android:background="@color/white" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_two"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_gray_97_size5">
-
-            <TextView
-                android:id="@+id/tv_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/v_two"
-                android:layout_width="60dp"
-                android:layout_height="4dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="14dp"
-                android:background="@color/white"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_three"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_gray_97_size5">
-
-            <TextView
-                android:id="@+id/tv_three"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/v_three"
-                android:layout_width="60dp"
-                android:layout_height="4dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="14dp"
-                android:background="@color/white"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_four"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/corners_gray_97_size5">
-
-            <TextView
-                android:id="@+id/tv_four"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/v_four"
-                android:layout_width="60dp"
-                android:layout_height="4dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="14dp"
-                android:background="@color/white"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <EditText
-            android:id="@+id/et_code"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:imeOptions="actionSearch"
+            android:layout_centerInParent="true"
+            android:background="@drawable/drawable_family_home_num"
+            android:focusable="true"
+            android:gravity="center"
             android:inputType="number"
-            android:maxLength="4" />
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bg_color" />
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_two"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/drawable_family_home_num"
+            android:focusable="true"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_three"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/drawable_family_home_num"
+            android:focusable="true"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_four"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/drawable_family_home_num"
+            android:focusable="true"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_sure"
@@ -170,20 +92,31 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/corners_red_fe"
+        android:background="@drawable/drawable_btn"
+        android:nextFocusRight="@id/rl_setting"
         android:text="确定"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <View
-        android:id="@+id/v_setting"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <RelativeLayout
+        android:id="@+id/rl_setting"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="30dp"
-        android:background="@mipmap/ic_main_setting" />
+        android:layout_marginRight="39dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/drawable_setting"
+        android:focusable="true"
+        android:nextFocusLeft="@id/btn_sure">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/ic_main_setting" />
+    </RelativeLayout>
+
 
 </RelativeLayout>
