@@ -3,7 +3,9 @@ package com.qiaosong.arraignmentmeeting.ui.activity.family;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import io.reactivex.functions.Consumer;
 
 public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implements MainFamilyContacts.IMainFamilyView {
@@ -88,6 +91,67 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
                     ToastUtils.show(mContext, "请输入4位会见码");
                 }
                 break;
+        }
+    }
+
+    @OnTextChanged({R.id.tv_one})
+    public void onTextChangedOne(CharSequence charSequence, int i, int i1, int i2) {
+        if (!TextUtils.isEmpty(charSequence.toString())) {
+            tvTwo.setFocusable(true);
+            tvTwo.setFocusableInTouchMode(true);
+            tvTwo.requestFocus();
+            tvTwo.requestFocusFromTouch();
+        } else {
+            tvOne.setFocusable(true);
+            tvOne.setFocusableInTouchMode(true);
+            tvOne.requestFocus();
+            tvOne.requestFocusFromTouch();
+        }
+    }
+
+    @OnTextChanged({R.id.tv_two})
+    public void onTextChangedTwo(CharSequence charSequence, int i, int i1, int i2) {
+        if (!TextUtils.isEmpty(charSequence.toString())) {
+            tvThree.setFocusable(true);
+            tvThree.setFocusableInTouchMode(true);
+            tvThree.requestFocus();
+            tvThree.requestFocusFromTouch();
+        } else {
+            tvTwo.setFocusable(true);
+            tvTwo.setFocusableInTouchMode(true);
+            tvTwo.requestFocus();
+            tvTwo.requestFocusFromTouch();
+        }
+    }
+
+    @OnTextChanged({R.id.tv_three})
+    public void onTextChangedThree(CharSequence charSequence, int i, int i1, int i2) {
+        if (!TextUtils.isEmpty(charSequence.toString())) {
+            tvFour.setFocusable(true);
+            tvFour.setFocusableInTouchMode(true);
+            tvFour.requestFocus();
+            tvFour.requestFocusFromTouch();
+        } else {
+            tvThree.setFocusable(true);
+            tvThree.setFocusableInTouchMode(true);
+            tvThree.requestFocus();
+            tvThree.requestFocusFromTouch();
+        }
+    }
+
+    @OnTextChanged({R.id.tv_four})
+    public void onTextChangedFour(CharSequence charSequence, int i, int i1, int i2) {
+        if (!TextUtils.isEmpty(charSequence.toString())) {
+            btnSure.setFocusable(true);
+            btnSure.setFocusableInTouchMode(true);
+            btnSure.requestFocus();
+            btnSure.requestFocusFromTouch();
+            InputManagerUtils.hideInput(this);
+        } else {
+            tvFour.setFocusable(true);
+            tvFour.setFocusableInTouchMode(true);
+            tvFour.requestFocus();
+            tvFour.requestFocusFromTouch();
         }
     }
 
