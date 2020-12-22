@@ -93,6 +93,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
         android:background="@drawable/drawable_btn"
+        android:nextFocusLeft="@id/tv_four"
+        android:nextFocusUp="@id/tv_four"
         android:nextFocusRight="@id/rl_setting"
         android:text="确定"
         android:textColor="@color/white"

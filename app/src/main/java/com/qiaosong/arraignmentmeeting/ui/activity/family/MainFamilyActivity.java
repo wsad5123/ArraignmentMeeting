@@ -102,10 +102,10 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             tvTwo.requestFocus();
             tvTwo.requestFocusFromTouch();
         } else {
-            tvOne.setFocusable(true);
-            tvOne.setFocusableInTouchMode(true);
-            tvOne.requestFocus();
-            tvOne.requestFocusFromTouch();
+//            tvOne.setFocusable(true);
+//            tvOne.setFocusableInTouchMode(true);
+//            tvOne.requestFocus();
+//            tvOne.requestFocusFromTouch();
         }
     }
 
@@ -117,10 +117,10 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             tvThree.requestFocus();
             tvThree.requestFocusFromTouch();
         } else {
-            tvTwo.setFocusable(true);
-            tvTwo.setFocusableInTouchMode(true);
-            tvTwo.requestFocus();
-            tvTwo.requestFocusFromTouch();
+            tvOne.setFocusable(true);
+            tvOne.setFocusableInTouchMode(true);
+            tvOne.requestFocus();
+            tvOne.requestFocusFromTouch();
         }
     }
 
@@ -132,10 +132,10 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             tvFour.requestFocus();
             tvFour.requestFocusFromTouch();
         } else {
-            tvThree.setFocusable(true);
-            tvThree.setFocusableInTouchMode(true);
-            tvThree.requestFocus();
-            tvThree.requestFocusFromTouch();
+            tvTwo.setFocusable(true);
+            tvTwo.setFocusableInTouchMode(true);
+            tvTwo.requestFocus();
+            tvTwo.requestFocusFromTouch();
         }
     }
 
@@ -148,10 +148,10 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
             btnSure.requestFocusFromTouch();
             InputManagerUtils.hideInput(this);
         } else {
-            tvFour.setFocusable(true);
-            tvFour.setFocusableInTouchMode(true);
-            tvFour.requestFocus();
-            tvFour.requestFocusFromTouch();
+            tvThree.setFocusable(true);
+            tvThree.setFocusableInTouchMode(true);
+            tvThree.requestFocus();
+            tvThree.requestFocusFromTouch();
         }
     }
 
@@ -175,64 +175,6 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
         }
         return code;
     }
-
-//    @OnTextChanged(R.id.et_code)
-//    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//        tvOne.setText("");
-//        tvTwo.setText("");
-//        tvThree.setText("");
-//        tvFour.setText("");
-////        vFour.setVisibility(View.GONE);
-////        vThree.setVisibility(View.GONE);
-////        vTwo.setVisibility(View.GONE);
-////        vOne.setVisibility(View.GONE);
-//        int length = s.length();
-//        switch (length) {
-//            case 4:
-//                tvFour.setText(s.subSequence(3, 4));
-//            case 3:
-//                tvThree.setText(s.subSequence(2, 3));
-//            case 2:
-//                tvTwo.setText(s.subSequence(1, 2));
-//            case 1:
-//                tvOne.setText(s.subSequence(0, 1));
-//                break;
-//        }
-////        switch (length) {
-////            case 3:
-////                vFour.setVisibility(View.VISIBLE);
-////                break;
-////            case 2:
-////                vThree.setVisibility(View.VISIBLE);
-////                break;
-////            case 1:
-////                vTwo.setVisibility(View.VISIBLE);
-////                break;
-////            case 0:
-////                vOne.setVisibility(View.VISIBLE);
-////                break;
-////        }
-//    }
-
-//    /**
-//     * 搜索按钮触发回调
-//     *
-//     * @param v
-//     * @param actionId
-//     * @param event
-//     * @return
-//     */
-//    @OnEditorAction(R.id.et_code)
-//    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//            if (etCode.getText().length() == 4) {
-//                mvpPresenter.getToken(etCode.getText().toString());
-//            } else {
-//                ToastUtils.show(mContext, "请输入4位会见码");
-//            }
-//        }
-//        return false;
-//    }
 
     @Subscribe
     public void onEvent(TagValueEvent event) {
