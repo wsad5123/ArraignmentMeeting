@@ -10,6 +10,7 @@ public class SharedPreferencesUtils {
 
     public static final String HTTP_ADDRESS_BEAN_JSON = "http_address_bean_json";//网络地址
     public static final String DEVICE_UUID = "device_uuid";//设备唯一号
+    public static final String PROVINCE_NAME = "province_name";//省份名称
 
 
     public static void setHttpAddressBeanJson(Context context, String jsonData) {
@@ -27,6 +28,15 @@ public class SharedPreferencesUtils {
     public static String getDeviceUuid(Context context) {
         return (String) getData(context, DEVICE_UUID, "");
     }
+
+    public static void setProvinceName(Context context, String jsonData) {
+        saveData(context, PROVINCE_NAME, jsonData);
+    }
+
+    public static String getProvinceName(Context context) {
+        return (String) getData(context, PROVINCE_NAME, "");
+    }
+
 
     /**
      * 删除SharedPreferences文件中所有数据

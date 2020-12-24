@@ -30,11 +30,13 @@ public class VideoWaitActivity extends BaseActivity {
 
     @BindView(R.id.rl_parent)
     RelativeLayout rlParent;
+    TitleViewHolder titleViewHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        rlParent.addView(titleViewHolder.getView());
         rlParent.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -77,8 +79,8 @@ public class VideoWaitActivity extends BaseActivity {
                     finish();
                 }
             }
+        } else if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
-
-
 }

@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qiaosong.arraignmentmeeting.R;
+import com.qiaosong.arraignmentmeeting.event.EventConstant;
+import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.ui.adapter.KeyBoardAdapter;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.base.IPresenter;
 import com.qiaosong.arraignmentmeeting.ui.viewholder.TitleViewHolder;
 import com.qiaosong.baselibrary.utils.ToastUtils;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +34,7 @@ public class AdminPasswordActivity extends BaseActivity {
     KeyBoardAdapter mKeyBoardAdapter;
 
     StringBuffer password = new StringBuffer();
-
+    TitleViewHolder titleViewHolder;
 
     @Override
     public int getLayoutId() {
@@ -55,7 +59,8 @@ public class AdminPasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        rlParent.addView(titleViewHolder.getView());
 
         mKeyBoardAdapter = new KeyBoardAdapter(mContext, null);
         mKeyBoardAdapter.setOnKeyBoardClickListener(onKeyBoardClickListener);
@@ -63,6 +68,13 @@ public class AdminPasswordActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
         rvKeyBoard.setLayoutManager(gridLayoutManager);
         rvKeyBoard.setAdapter(mKeyBoardAdapter);
+    }
+
+    @Subscribe
+    public void onEvent(TagValueEvent event) {
+        if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
+        }
     }
 
     @OnClick(R.id.btn_sure)

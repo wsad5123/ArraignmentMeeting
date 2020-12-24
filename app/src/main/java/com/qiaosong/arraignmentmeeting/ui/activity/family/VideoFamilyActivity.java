@@ -98,6 +98,8 @@ public class VideoFamilyActivity extends BaseActivity<VideoFamilyPresenter> impl
                 RemoteVideoEventBean bean = (RemoteVideoEventBean) event.getValue();
                 initRemoteVideoEvent(bean);
             }
+        } else if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
 

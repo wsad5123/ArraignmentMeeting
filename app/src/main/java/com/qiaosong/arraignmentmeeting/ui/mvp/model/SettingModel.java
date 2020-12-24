@@ -12,6 +12,8 @@ import com.qiaosong.arraignmentmeeting.bean.RegulatorTypeBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiDeviceInfoBean;
 import com.qiaosong.arraignmentmeeting.bean.api.ApiRegulatorBean;
 import com.qiaosong.arraignmentmeeting.callback.MvpDataCallBack;
+import com.qiaosong.arraignmentmeeting.event.EventConstant;
+import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.http.ApiObserver;
 import com.qiaosong.arraignmentmeeting.http.RetrofitHttpParams;
 import com.qiaosong.arraignmentmeeting.http.subscribe.AppSubscribe;
@@ -20,6 +22,8 @@ import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.SettingContacts;
 import com.qiaosong.arraignmentmeeting.utils.DeviceUtils;
 import com.qiaosong.arraignmentmeeting.utils.PhoneUtils;
 import com.qiaosong.baselibrary.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -187,7 +191,9 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
             @Override
             public void onSuccess(DeviceInfoBean data) {
                 if (data != null) {
+                    AppCacheManager.getInstance().setProvinceName(mProvinceBean.getName());
                     AppCacheManager.getInstance().setDeviceUuid(data.getDevicuuid());
+                    EventBus.getDefault().post(new TagValueEvent(EventConstant.TITLE_REFRESH, null));
                     callBack.onData(true);
                 }
             }
@@ -210,6 +216,8 @@ public class SettingModel extends BaseModel implements SettingContacts.ISettingM
             public void onSuccess(ApiDeviceInfoBean data) {
                 if (data != null && data.getAddress() != null && data.getDeviceinfo() != null && (data.getPrisonBean() != null || data.getUnitinfo() != null) && data.getTypename() != null) {
                     AppCacheManager.getInstance().setDeviceUuid(data.getDeviceinfo().getDevicuuid());
+                    AppCacheManager.getInstance().setProvinceName(data.getAddress().getP_name());
+                    EventBus.getDefault().post(new TagValueEvent(EventConstant.TITLE_REFRESH, null));
                     mProvinceBean = new ProvinceBean(data.getAddress().getP_code(), data.getAddress().getP_name());
                     mCityBean = new CityBean(data.getAddress().getC_code(), data.getAddress().getC_name());
                     mRegulatorTypeBean = data.getTypename();

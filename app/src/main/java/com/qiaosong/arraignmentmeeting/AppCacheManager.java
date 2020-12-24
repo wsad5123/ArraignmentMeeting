@@ -16,6 +16,7 @@ public class AppCacheManager {
     private LoginTokenBean loginTokenBean;
     private HttpAddressBean httpAddressBean;
     private String deviceUuid;
+    private String provinceName;
 
     private AppCacheManager() {
     }
@@ -64,6 +65,18 @@ public class AppCacheManager {
     public void setDeviceUuid(String deviceUuid) {
         this.deviceUuid = deviceUuid;
         SharedPreferencesUtils.setDeviceUuid(UIManager.getInstance().getBaseContext(), TextUtils.isEmpty(deviceUuid) ? "" : deviceUuid);
+    }
+
+    public String getProvinceName() {
+        if (TextUtils.isEmpty(provinceName)) {
+            provinceName = SharedPreferencesUtils.getProvinceName(UIManager.getInstance().getBaseContext());
+        }
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+        SharedPreferencesUtils.setProvinceName(UIManager.getInstance().getBaseContext(), TextUtils.isEmpty(provinceName) ? "" : provinceName);
     }
 }
 

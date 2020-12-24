@@ -22,6 +22,8 @@ import com.qiaosong.arraignmentmeeting.callback.OnCitySelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnProvinceSelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorSelectListener;
 import com.qiaosong.arraignmentmeeting.callback.OnRegulatorTypeSelectListener;
+import com.qiaosong.arraignmentmeeting.event.EventConstant;
+import com.qiaosong.arraignmentmeeting.event.TagValueEvent;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseActivity;
 import com.qiaosong.arraignmentmeeting.ui.mvp.contacts.SettingContacts;
 import com.qiaosong.arraignmentmeeting.ui.mvp.presenter.SettingPresenter;
@@ -30,6 +32,8 @@ import com.qiaosong.arraignmentmeeting.ui.widget.CitySelectDialog;
 import com.qiaosong.arraignmentmeeting.ui.widget.ProvinceSelectDialog;
 import com.qiaosong.arraignmentmeeting.ui.widget.RegulatorSelectDialog;
 import com.qiaosong.arraignmentmeeting.ui.widget.RegulatorTypeSelectDialog;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -64,9 +68,9 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     CitySelectDialog mCitySelectDialog;
     RegulatorTypeSelectDialog mRegulatorTypeSelectDialog;
     RegulatorSelectDialog mRegulatorSelectDialog;
+    TitleViewHolder titleViewHolder;
 
     @Override
-
     public int getLayoutId() {
         return R.layout.activity_setting;
     }
@@ -89,10 +93,18 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        rlParent.addView(titleViewHolder.getView());
         if (AppCacheManager.getInstance().getHttpAddressBean() != null) {
             etIp.setText(AppCacheManager.getInstance().getHttpAddressBean().getIp());
             etPort.setText(AppCacheManager.getInstance().getHttpAddressBean().getPort());
+        }
+    }
+
+    @Subscribe
+    public void onEvent(TagValueEvent event) {
+        if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
 

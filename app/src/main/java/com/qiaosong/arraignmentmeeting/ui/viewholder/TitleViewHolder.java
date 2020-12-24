@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qiaosong.arraignmentmeeting.AppCacheManager;
 import com.qiaosong.arraignmentmeeting.R;
 import com.qiaosong.arraignmentmeeting.ui.base.BaseViewHolder;
 import com.qiaosong.baselibrary.utils.DateUtils;
@@ -22,12 +23,15 @@ public class TitleViewHolder extends BaseViewHolder {
     LinearLayout llTitle;
     @BindView(R.id.tv_state)
     TextView tvState;
+    @BindView(R.id.tv_name)
+    TextView tvName;
 
     public TitleViewHolder(Context mContext, ViewGroup parent) {
         super(mContext, parent);
         tvDate.setText(DateUtils.getFormatDateYMD() + "");
         tvTime.setText(DateUtils.getFormatDateHM() + "");
         tvTime.postDelayed(runnable, 1000);
+        tvName.setText(AppCacheManager.getInstance().getProvinceName() + "远程亲情会见系统");
     }
 
     @Override
@@ -72,6 +76,12 @@ public class TitleViewHolder extends BaseViewHolder {
             tvState.setText("会见已结束，即将关闭聊天室");
             tvState.setTextColor(mContext.getResources().getColor(R.color.red));
         }
+    }
 
+    /**
+     * 更新标题
+     */
+    public void updateTitle() {
+        tvName.setText(AppCacheManager.getInstance().getProvinceName() + "远程亲情会见系统");
     }
 }

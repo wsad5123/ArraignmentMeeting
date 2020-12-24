@@ -51,11 +51,13 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
     Button btnSure;
     @BindView(R.id.rl_parent)
     RelativeLayout rlParent;
+    TitleViewHolder titleViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        rlParent.addView(titleViewHolder.getView());
     }
 
     @Override
@@ -185,6 +187,8 @@ public class MainFamilyActivity extends BaseActivity<MainFamilyPresenter> implem
                     startActivity(new Intent(mContext, VideoWaitActivity.class));
                 }
             }
+        } else if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
 

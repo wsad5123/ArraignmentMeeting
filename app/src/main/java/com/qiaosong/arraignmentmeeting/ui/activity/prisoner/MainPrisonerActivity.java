@@ -52,6 +52,7 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     View vSetting;
     @BindView(R.id.rl_parent)
     RelativeLayout rlParent;
+    TitleViewHolder titleViewHolder;
 
     @Override
     public int getLayoutId() {
@@ -76,7 +77,8 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rlParent.addView(new TitleViewHolder(mContext, rlParent).getView());
+        titleViewHolder = new TitleViewHolder(mContext, rlParent);
+        rlParent.addView(titleViewHolder.getView());
 
         mKeyBoardAdapter = new KeyBoardAdapter(mContext, null);
         mKeyBoardAdapter.setOnKeyBoardClickListener(onKeyBoardClickListener);
@@ -115,6 +117,8 @@ public class MainPrisonerActivity extends BaseActivity<MainPrisonerPresenter> im
                     startActivity(new Intent(mContext, VideoWaitActivity.class));
                 }
             }
+        } else if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
 

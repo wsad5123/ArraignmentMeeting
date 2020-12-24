@@ -98,6 +98,8 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
                 RemoteVideoEventBean bean = (RemoteVideoEventBean) event.getValue();
                 initRemoteVideoEvent(bean);
             }
+        } else if (EventConstant.TITLE_REFRESH.equals(event.getTag())) {
+            titleViewHolder.updateTitle();
         }
     }
 
