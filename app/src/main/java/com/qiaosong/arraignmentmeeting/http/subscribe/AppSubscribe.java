@@ -74,6 +74,28 @@ public class AppSubscribe extends BaseSubscribe {
     }
 
     /**
+     * 家属端开始会见
+     *
+     * @param mObservable
+     */
+    public void requestMarkFamonLine(MultipartBody params, ApiObserver<Object> mObservable) {
+        Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
+        Observable<ApiResultBean<Object>> observable = apiService.requestMarkFamonLine(params);
+        subscribe(observable, mObservable);
+    }
+
+    /**
+     * 犯人端开始会见
+     *
+     * @param mObservable
+     */
+    public void requestMarkCrmonLine(MultipartBody params, ApiObserver<Object> mObservable) {
+        Api.AppInterface apiService = ServiceGenerator.createService(Api.AppInterface.class);
+        Observable<ApiResultBean<Object>> observable = apiService.requestMarkCrmonLine(params);
+        subscribe(observable, mObservable);
+    }
+
+    /**
      * 获取所有省份信息
      *
      * @param mObservable

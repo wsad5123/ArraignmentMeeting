@@ -30,6 +30,7 @@ public class MainPrisonerPresenter extends BasePresenter<MainPrisonerActivity> i
             mModel.httpGetToken(code, new MvpDataCallBack<LoginTokenBean>() {
                 @Override
                 public void onData(LoginTokenBean data) {
+                    mModel.requestMarkCrmonLine(code);
                     mvpReference.get().onLoginToken(data);
                 }
             });

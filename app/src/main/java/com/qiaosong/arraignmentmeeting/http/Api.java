@@ -64,5 +64,14 @@ public class Api {
         @POST("deviceinfo/detail")
         Observable<ApiResultBean<ApiDeviceInfoBean>> requestDeviceInfo(@Body MultipartBody body);
 
+        //标记家属端登录
+        @POST("seatlock/markfamonline")
+        Observable<ApiResultBean<Object>> requestMarkFamonLine(@Body MultipartBody body);
+
+        //标记罪犯端登录
+        @POST("seatlock/markcrmonline")
+        Observable<ApiResultBean<Object>> requestMarkCrmonLine(@Body MultipartBody body);
+
+
     }
 }

@@ -45,4 +45,24 @@ public class MainFamilyModel extends BaseModel implements MainFamilyContacts.IMa
             }
         });
     }
+
+
+    /**
+     * 通知服务端进入房间
+     * @param code
+     */
+    @Override
+    public void httpMarkFamonLine(String code){
+        MultipartBody.Builder builder = new RetrofitHttpParams(mContext).getRequestMultipartBody();
+        builder.addFormDataPart("meettingCode", code);
+        new AppSubscribe(mContext).requestMarkFamonLine(builder.build(), new ApiObserver<Object>(mContext, false) {
+            @Override
+            public void onSuccess(Object data) {
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
 }

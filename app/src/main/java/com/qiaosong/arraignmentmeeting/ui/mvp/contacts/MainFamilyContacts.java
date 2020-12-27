@@ -17,5 +17,7 @@ public class MainFamilyContacts {
 
     public interface IMainFamilyModel {
         void httpGetToken(String code, MvpDataCallBack<LoginTokenBean> callBack);
+
+        void httpMarkFamonLine(String code);
     }
 }

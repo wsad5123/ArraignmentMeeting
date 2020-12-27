@@ -39,6 +39,7 @@ public class MainFamilyPresenter extends BasePresenter<MainFamilyActivity> imple
             mModel.httpGetToken(code, new MvpDataCallBack<LoginTokenBean>() {
                 @Override
                 public void onData(LoginTokenBean data) {
+                    mModel.httpMarkFamonLine(code);
                     mvpReference.get().onLoginToken(data);
                 }
             });

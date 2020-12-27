@@ -128,6 +128,7 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
                 isPublish = true;
                 FspEngineManager.getInstance().startPublishVideo();
                 FspEngineManager.getInstance().startPublishAudio();
+                decMix();
             }
         } else {
             tvCount.setVisibility(View.GONE);
@@ -164,4 +165,12 @@ public class VideoPrisonerActivity extends BaseActivity<VideoPrisonerPresenter> 
         }
     }
 
+    public void decMix() {
+        try {
+            Process proc = Runtime.getRuntime().exec(new String[]{"su", "-c", "amix -c 0 \"IN1 Boost\" 1"});
+            proc.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

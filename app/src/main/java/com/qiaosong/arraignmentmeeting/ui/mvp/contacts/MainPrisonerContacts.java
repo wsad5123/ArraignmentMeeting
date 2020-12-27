@@ -23,5 +23,7 @@ public class MainPrisonerContacts {
         void httpGetToken(String code, MvpDataCallBack<LoginTokenBean> callBack);
 
         void httpGetOrderCodeByCrimanalsCardId(String id, MvpDataCallBack<String> callBack);
+
+        void requestMarkCrmonLine(String code);
     }
 }
